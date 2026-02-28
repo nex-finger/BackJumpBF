@@ -93,11 +93,11 @@ int main(void)
     uchar aDiskOut;           /* ROMから取得した値 */
     uchar aMemOut;            /* RAMから取得した値 */
     uchar aZeroFlg;           /* ゼロフラグの値 */
-    bool aZflg;               /* フラグの値(条件付きジャンプに使用) */
     struct STRdecode aDecOut; /* 命令デコーダの出力 */
     uchar aALUOut;            /* ALUの出力 */
     uchar aStackOut;          /* スタック一番手前の出力 */
     uchar aPCUOut;            /* PCU(ProgramCounterUnit)の出力 */
+    bool aZflg = 0;           /* フラグの値(条件付きジャンプに使用) */
 
     init();
 
