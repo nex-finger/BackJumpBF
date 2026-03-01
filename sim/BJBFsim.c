@@ -26,7 +26,7 @@ struct STRdecode
     bool isFwd;
     bool isBak;
     bool isIn;
-    bool isout;
+    bool isOut;
     bool isPsh;
     bool isPop;
     bool isJmp;
@@ -144,7 +144,7 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     {
         if (sPCreg == i)
         {
-            printf("v%01x ", i);
+            printf("↓%01x ", i);
         }
         else
         {
@@ -168,6 +168,30 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     putchar('\n');
     putchar('\n');
 
+    /* メモリの表示 */
+    printf("memory:\n");
+    printf("    ");
+    for (i = 0; i < 16; i++)
+    {
+        if (sARreg == i)
+        {
+            printf("↓%01x ", i);
+        }
+        else
+        {
+            printf(" %01x ", i);
+        }
+    }
+    putchar('\n');
+
+    printf("00: ");
+    for (i = 0; i < 16; i++)
+    {
+        printf("%02x ", sMemory[i]);
+    }
+    putchar('\n');
+    putchar('\n');
+
     /* 入力の表示 */
     printf("input:\n");
     printf("    ");
@@ -175,7 +199,7 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     {
         if (sInputOffset == i)
         {
-            printf("v%01x ", i);
+            printf("↓%01x ", i);
         }
         else
         {
@@ -194,6 +218,35 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
 
     /*uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     uchar inPCUmul, uchar inARUmul, uchar inMul, uchar inZchk, uchar inALUadd*/
+
+    printf("PC: %02x, AR: %02x\n", sPCreg, sARreg);
+    printf("CODE: '%c'\n", inCode);
+    printf("ctl: %01x %01x %01x %01x %01x %01x %01x %01x %01x\n",
+           inDec.isInc, inDec.isDec, inDec.isFwd, inDec.isBak, inDec.isIn, inDec.isOut, inDec.isPsh, inDec.isPop, inDec.isJmp);
+    printf("MEM[AR]: %02x, input: %02x, ADD: %02x\n", sMemory[sARreg], sInput[sInputOffset], inALUadd);
+    printf("STACK: %02x %02x %02x %02x\n", sStack[0], sStack[1], sStack[2], sStack[3]);
+    /* printf(); */
+
+    return;
+
+    printf("  ┌─────┐      ┌─────┐\n");
+    printf("┌→│code │'%c'──→│ DEC │\n", inCode);
+    printf("│ └─────┘      │  inc│%01x─\n", inDec.isInc);
+    printf("│              │  dec│%01x─\n", inDec.isDec);
+    printf("│              │  fwd│%01x─\n", inDec.isFwd);
+    printf("│              │  bak│%01x─\n", inDec.isBak);
+    printf("│              │   in│%01x─\n", inDec.isIn);
+    printf("│              │  out│%01x─\n", inDec.isOut);
+    printf("│              │  psh│%01x─\n", inDec.isPsh);
+    printf("│              │  pop│%01x─\n", inDec.isPop);
+    printf("│              │  jmp│%01x─\n", inDec.isJmp);
+    printf("│              └─────┘\n");
+    printf("│                           ┌─────┐    ┌─────┐\n");
+    printf("│                           │input│%02x──→│ MUL │\n");
+    printf("│                           └─────┘\n");
+    printf("│   ┌─────┐     ┌─────┐     ┌─────┐\n");
+    printf("│ ┌→│ MUL │%02x──→│ARreg│%02x──→│ MEM │\n");
+    printf("│ │ └─────┘     └─────┘\n");
 }
 
 /*
@@ -382,6 +435,22 @@ uchar add(uchar inVal1, uchar inVal2)
     return aRet;
 }
 
+void update_input(bool in)
+{
+    if (in == true)
+    {
+        sInputOffset++;
+    }
+}
+
+void update_output(uchar inVal, bool in)
+{
+    if (in == true)
+    {
+        printf("output: '%c'\n", inVal);
+    }
+}
+
 int main(void)
 {
     uchar aPCout;
@@ -390,12 +459,13 @@ int main(void)
     uchar aMemout;
     uchar aInout;
 
-    struct STRdecode aDec;
+    struct STRdecode aDec = {0};
     uchar aPCUmul;
     uchar aARUmul;
     uchar aALUadd;
 
     reset();
+    (void)getchar(); /* ゴミ捨て */
 
     while (1)
     {
@@ -403,7 +473,7 @@ int main(void)
         aPCout = sPCreg;
         aARout = sARreg;
         aSTout = sStack[0];
-        aMemout = sMemory[sPCreg];
+        aMemout = sMemory[sARreg];
         aInout = sInput[sInputOffset];
 
         /* 組み合わせ回路の更新 */
@@ -411,6 +481,13 @@ int main(void)
         aPCUmul = get_PCU(aSTout, inc(aPCout), aDec.isJmp);                                     /* PCUの更新 */
         aARUmul = get_ARU(aARout, aDec.isFwd, aDec.isBak);                                      /* ARUの更新 */
         aALUadd = add(get_arg(aDec.isInc, aDec.isDec), get_ALUmul(aInout, aMemout, aDec.isIn)); /* ALUの更新 */
+
+        /* debug */
+        /* printf("%02x, %02x\n", aPCout, sPCreg); */
+        /* (void)getchar(); */
+
+        /* モードにより待機 */
+        (void)getchar();
 
         /* 表示 */
         displayStatus(
@@ -423,14 +500,15 @@ int main(void)
             get_zchk(aMemout),                      /* aZchk*/
             aALUadd);
 
-        /* モードにより待機 */
-        (void)getchar();
-
         /* フリップフロップ更新 */
         sPCreg = aPCUmul;
         sARreg = aARUmul;
-        sMemory[aPCout] = aALUadd;
+        sMemory[aARout] = aALUadd;
         update_stack(aPCout, aDec.isPsh, aDec.isPop);
+
+        /* 入出力更新 */
+        update_input(aDec.isIn);
+        update_output(aALUadd, aDec.isOut);
     }
 
     return 0;
