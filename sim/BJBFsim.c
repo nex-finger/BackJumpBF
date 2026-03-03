@@ -12,6 +12,7 @@ typedef unsigned char uchar;
 #define DEF_CODE_SIZE (256)   /* ソースコードのデータ長 */
 #define DEF_MEMORY_SIZE (256) /* メモリのデータ長 */
 #define DEF_INPUT_SIZE (16)   /* 入力のデータ長 */
+#define DEF_OUTPUT_SIZE (16)  /* 出力のデータ長 */
 #define DEF_STACK_SIZE (4)    /* スタックのデータ長 */
 
 /* ------------------------------------------------------------------------- *
@@ -45,6 +46,9 @@ static uchar sMemory[DEF_MEMORY_SIZE];
 /* 入力領域 */
 static uchar sInput[DEF_INPUT_SIZE];
 
+/* 出力領域 */
+static uchar sOutput[DEF_OUTPUT_SIZE];
+
 /* スタック領域 */
 static uchar sStack[DEF_STACK_SIZE];
 
@@ -56,6 +60,9 @@ static uchar sARreg;
 
 /* 入力オフセット */
 static uchar sInputOffset;
+
+/* 出力オフセット */
+static uchar sOutputOffset;
 
 /* ------------------------------------------------------------------------- *
  * プロトタイプ宣言
@@ -97,6 +104,7 @@ void reset(void)
     sARreg = (unsigned char)0x00;
     memset(sStack, (unsigned char)0x00, DEF_STACK_SIZE);
     sInputOffset = (unsigned char)0x00;
+    sInputOffset = (unsigned char)0x00;
 
     /* コードのロード */
     printf("input code: ");
@@ -134,15 +142,16 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
                    uchar inPCUmul, uchar inARUmul, uchar inMul, uchar inZchk, uchar inALUadd)
 {
     int i;
+    int j;
 
     system("cls");
 
     /* コードの表示 */
     printf("code:\n");
-    printf("    ");
+    printf("     ");
     for (i = 0; i < 16; i++)
     {
-        if (sPCreg == i)
+        if ((sPCreg % 16) == i)
         {
             printf("↓%01x ", i);
         }
@@ -153,24 +162,27 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     }
     putchar('\n');
 
-    printf("00: ");
     for (i = 0; i < 16; i++)
     {
-        printf(" %c ", sCode[i]);
+        if ((sPCreg / 16) == i)
+        {
+            printf("→%02x: ", i * 16);
+        }
+        else
+        {
+            printf(" %02x: ", i * 16);
+        }
+        for (j = 0; j < 16; j++)
+        {
+            printf(" %c ", sCode[i * 16 + j]);
+        }
+        putchar('\n');
     }
-    putchar('\n');
-
-    printf("10: ");
-    for (i = 16; i < 32; i++)
-    {
-        printf(" %c ", sCode[i]);
-    }
-    putchar('\n');
     putchar('\n');
 
     /* メモリの表示 */
     printf("memory:\n");
-    printf("    ");
+    printf("     ");
     for (i = 0; i < 16; i++)
     {
         if (sARreg == i)
@@ -184,7 +196,7 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     }
     putchar('\n');
 
-    printf("00: ");
+    printf("00:  ");
     for (i = 0; i < 16; i++)
     {
         printf("%02x ", sMemory[i]);
@@ -194,7 +206,7 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
 
     /* 入力の表示 */
     printf("input:\n");
-    printf("    ");
+    printf("     ");
     for (i = 0; i < 16; i++)
     {
         if (sInputOffset == i)
@@ -208,10 +220,40 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     }
     putchar('\n');
 
-    printf("00: ");
+    printf("00:  ");
     for (i = 0; i < 16; i++)
     {
         printf("%02x ", sInput[i]);
+    }
+    putchar('\n');
+    putchar('\n');
+
+    /* 出力の表示 */
+    printf("output:\n");
+    printf("     ");
+    for (i = 0; i < 16; i++)
+    {
+        if (sOutputOffset == i)
+        {
+            printf("↓%01x ", i);
+        }
+        else
+        {
+            printf(" %01x ", i);
+        }
+    }
+    putchar('\n');
+
+    printf("00:  ");
+    for (i = 0; i < 16; i++)
+    {
+        printf("%02x ", sOutput[i]);
+    }
+    putchar('\n');
+    printf("      ");
+    for (i = 0; i < 16; i++)
+    {
+        printf("%c  ", sOutput[i]);
     }
     putchar('\n');
     putchar('\n');
@@ -226,27 +268,6 @@ void displayStatus(uchar inCode, struct STRdecode inDec, uchar inPCUinc,
     printf("MEM[AR]: %02x, input: %02x, ADD: %02x\n", sMemory[sARreg], sInput[sInputOffset], inALUadd);
     printf("STACK: %02x %02x %02x %02x\n", sStack[0], sStack[1], sStack[2], sStack[3]);
     /* printf(); */
-
-    return;
-
-    printf("  ┌─────┐      ┌─────┐\n");
-    printf("┌→│code │'%c'──→│ DEC │\n", inCode);
-    printf("│ └─────┘      │  inc│%01x─\n", inDec.isInc);
-    printf("│              │  dec│%01x─\n", inDec.isDec);
-    printf("│              │  fwd│%01x─\n", inDec.isFwd);
-    printf("│              │  bak│%01x─\n", inDec.isBak);
-    printf("│              │   in│%01x─\n", inDec.isIn);
-    printf("│              │  out│%01x─\n", inDec.isOut);
-    printf("│              │  psh│%01x─\n", inDec.isPsh);
-    printf("│              │  pop│%01x─\n", inDec.isPop);
-    printf("│              │  jmp│%01x─\n", inDec.isJmp);
-    printf("│              └─────┘\n");
-    printf("│                           ┌─────┐    ┌─────┐\n");
-    printf("│                           │input│%02x──→│ MUL │\n");
-    printf("│                           └─────┘\n");
-    printf("│   ┌─────┐     ┌─────┐     ┌─────┐\n");
-    printf("│ ┌→│ MUL │%02x──→│ARreg│%02x──→│ MEM │\n");
-    printf("│ │ └─────┘     └─────┘\n");
 }
 
 /*
@@ -447,7 +468,8 @@ void update_output(uchar inVal, bool in)
 {
     if (in == true)
     {
-        printf("output: '%c'\n", inVal);
+        sOutput[sOutputOffset] = inVal;
+        sOutputOffset++;
     }
 }
 
