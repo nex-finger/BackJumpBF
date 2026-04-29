@@ -509,7 +509,7 @@ int main(void)
         /* (void)getchar(); */
 
         /* モードにより待機 */
-        (void)getchar();
+        //(void)getchar();
 
         /* 表示 */
         displayStatus(
@@ -531,6 +531,8 @@ int main(void)
         /* 入出力更新 */
         update_input(aDec.isIn);
         update_output(aALUadd, aDec.isOut);
+
+        getchar();
     }
 
     return 0;
