@@ -53,7 +53,7 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xFF;
     TRISC = 0xB8;
-    TRISD = 0xFF;
+    TRISD = 0xF7;
     TRISE = 0x7;
 
     /**
@@ -61,8 +61,8 @@ void PIN_MANAGER_Initialize(void)
     */
     ANSELA = 0xFF;
     ANSELB = 0xFF;
-    ANSELC = 0x0;
-    ANSELD = 0xFC;
+    ANSELC = 0x18;
+    ANSELD = 0xF0;
     ANSELE = 0x7;
 
     /**
@@ -88,16 +88,16 @@ void PIN_MANAGER_Initialize(void)
     */
     SLRCONA = 0xFF;
     SLRCONB = 0xFF;
-    SLRCONC = 0xE7;
-    SLRCOND = 0xFF;
+    SLRCONC = 0xFF;
+    SLRCOND = 0xF3;
     SLRCONE = 0x7;
     /**
     INLVLx registers
     */
     INLVLA = 0xFF;
     INLVLB = 0xFF;
-    INLVLC = 0xE7;
-    INLVLD = 0xFF;
+    INLVLC = 0xFF;
+    INLVLD = 0xF3;
     INLVLE = 0xF;
 
     /**
@@ -105,10 +105,6 @@ void PIN_MANAGER_Initialize(void)
     */
     RXPPS = 0x17; //RC7->EUSART:RX;
     RC6PPS = 0x10;  //RC6->EUSART:TX;
-    SSP1CLKPPS = 0x13;  //RC3->MSSP1:SCL1;
-    RC3PPS = 0x14;  //RC3->MSSP1:SCL1;
-    SSP1DATPPS = 0x14;  //RC4->MSSP1:SDA1;
-    RC4PPS = 0x15;  //RC4->MSSP1:SDA1;
 
     /**
     APFCON registers

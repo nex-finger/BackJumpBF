@@ -8,9 +8,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "119 mcc_generated_files/system/src/../../uart/eusart.h
 [; ;mcc_generated_files/system/src/../../uart/eusart.h: 119: void EUSART_Initialize(void);
 [v _EUSART_Initialize `(v ~T0 @X0 0 ef ]
-"77 mcc_generated_files/system/src/../../i2c_host/mssp1.h
-[; ;mcc_generated_files/system/src/../../i2c_host/mssp1.h: 77: void I2C1_Initialize(void);
-[v _I2C1_Initialize `(v ~T0 @X0 0 ef ]
 "85 mcc_generated_files/system/src/../../system/interrupt.h
 [; ;mcc_generated_files/system/src/../../system/interrupt.h: 85: void INTERRUPT_Initialize (void);
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
@@ -1667,12 +1664,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/system/src/system.c: 43:     EUSART_Initialize();
 [e ( _EUSART_Initialize ..  ]
 "44
-[; ;mcc_generated_files/system/src/system.c: 44:     I2C1_Initialize();
-[e ( _I2C1_Initialize ..  ]
-"45
-[; ;mcc_generated_files/system/src/system.c: 45:     INTERRUPT_Initialize();
+[; ;mcc_generated_files/system/src/system.c: 44:     INTERRUPT_Initialize();
 [e ( _INTERRUPT_Initialize ..  ]
-"46
-[; ;mcc_generated_files/system/src/system.c: 46: }
-[e :UE 1619 ]
+"45
+[; ;mcc_generated_files/system/src/system.c: 45: }
+[e :UE 1616 ]
 }

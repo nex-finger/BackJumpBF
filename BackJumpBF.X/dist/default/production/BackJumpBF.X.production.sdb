@@ -3,32 +3,6 @@
 [d edition pro ]
 [d chip 16F18877 ]
 [d frameptr 6 ]
-"78 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/i2c_host/src/mssp1.c
-[e E12156 . `uc
-I2C_ERROR_NONE 0
-I2C_ERROR_ADDR_NACK 1
-I2C_ERROR_DATA_NACK 2
-I2C_ERROR_BUS_COLLISION 3
-]
-"95
-[e E12165 . `uc
-I2C_STATE_IDLE 0
-I2C_STATE_SEND_RD_ADDR 1
-I2C_STATE_SEND_WR_ADDR 2
-I2C_STATE_TX 3
-I2C_STATE_RX 4
-I2C_STATE_NACK 5
-I2C_STATE_ERROR 6
-I2C_STATE_STOP 7
-I2C_STATE_RESET 8
-]
-"78 D:\BackJumpBF\repo\BackJumpBF.X\main.c
-[e E12613 . `uc
-I2C_ERROR_NONE 0
-I2C_ERROR_ADDR_NACK 1
-I2C_ERROR_DATA_NACK 2
-I2C_ERROR_BUS_COLLISION 3
-]
 "10 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "4 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\Umul8_16.c
@@ -37,90 +11,12 @@ I2C_ERROR_BUS_COLLISION 3
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"37 D:\BackJumpBF\repo\BackJumpBF.X\main.c
-[v _MCP23017_WriteReg MCP23017_WriteReg `(v  1 e 1 0 ]
-"53
+"12 D:\BackJumpBF\repo\BackJumpBF.X\i2c.c
+[v _I2C_Init I2C_Init `(v  1 e 1 0 ]
+"19
+[v _I2C_SDAhigh I2C_SDAhigh `(v  1 e 1 0 ]
+"42 D:\BackJumpBF\repo\BackJumpBF.X\main.c
 [v _main main `(i  1 e 2 0 ]
-"112 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/i2c_host/src/mssp1.c
-[v _I2C1_Initialize I2C1_Initialize `(v  1 e 1 0 ]
-"127
-[v _I2C1_Deinitialize I2C1_Deinitialize `(v  1 e 1 0 ]
-"136
-[v _I2C1_Write I2C1_Write `(a  1 e 1 0 ]
-"155
-[v _I2C1_Read I2C1_Read `(a  1 e 1 0 ]
-"174
-[v _I2C1_WriteRead I2C1_WriteRead `(a  1 e 1 0 ]
-"193
-[v _I2C1_ErrorGet I2C1_ErrorGet `(E12156  1 e 1 0 ]
-"200
-[v _I2C1_IsBusy I2C1_IsBusy `(a  1 e 1 0 ]
-"205
-[v _I2C1_CallbackRegister I2C1_CallbackRegister `(v  1 e 1 0 ]
-"213
-[v _I2C1_Tasks I2C1_Tasks `(v  1 e 1 0 ]
-"235
-[v _I2C1_ReadStart I2C1_ReadStart `(v  1 s 1 I2C1_ReadStart ]
-"241
-[v _I2C1_WriteStart I2C1_WriteStart `(v  1 s 1 I2C1_WriteStart ]
-"247
-[v _I2C1_Close I2C1_Close `(v  1 s 1 I2C1_Close ]
-"259
-[v _I2C1_EventHandler I2C1_EventHandler `(v  1 s 1 I2C1_EventHandler ]
-"287
-[v _I2C1_ErrorEventHandler I2C1_ErrorEventHandler `(v  1 s 1 I2C1_ErrorEventHandler ]
-"297
-[v _I2C1_EVENT_IDLE I2C1_EVENT_IDLE `(E12165  1 s 1 I2C1_EVENT_IDLE ]
-"303
-[v _I2C1_EVENT_SEND_RD_ADDR I2C1_EVENT_SEND_RD_ADDR `(E12165  1 s 1 I2C1_EVENT_SEND_RD_ADDR ]
-"309
-[v _I2C1_EVENT_SEND_WR_ADDR I2C1_EVENT_SEND_WR_ADDR `(E12165  1 s 1 I2C1_EVENT_SEND_WR_ADDR ]
-"315
-[v _I2C1_EVENT_TX I2C1_EVENT_TX `(E12165  1 s 1 I2C1_EVENT_TX ]
-"342
-[v _I2C1_EVENT_RX I2C1_EVENT_RX `(E12165  1 s 1 I2C1_EVENT_RX ]
-"375
-[v _I2C1_EVENT_NACK I2C1_EVENT_NACK `(E12165  1 s 1 I2C1_EVENT_NACK ]
-"382
-[v _I2C1_EVENT_ERROR I2C1_EVENT_ERROR `(E12165  1 s 1 I2C1_EVENT_ERROR ]
-"389
-[v _I2C1_EVENT_STOP I2C1_EVENT_STOP `(E12165  1 s 1 I2C1_EVENT_STOP ]
-"396
-[v _I2C1_EVENT_RESET I2C1_EVENT_RESET `(E12165  1 s 1 I2C1_EVENT_RESET ]
-"406
-[v _I2C1_DataReceive I2C1_DataReceive `(uc  1 s 1 I2C1_DataReceive ]
-"411
-[v _I2C1_DataTransmit I2C1_DataTransmit `(v  1 s 1 I2C1_DataTransmit ]
-"416
-[v _I2C1_BusReset I2C1_BusReset `T(v  1 s 1 I2C1_BusReset ]
-"422
-[v _I2C1_ReceiveEnable I2C1_ReceiveEnable `T(v  1 s 1 I2C1_ReceiveEnable ]
-"427
-[v _I2C1_RestartEnable I2C1_RestartEnable `T(v  1 s 1 I2C1_RestartEnable ]
-"432
-[v _I2C1_RestartDisable I2C1_RestartDisable `T(v  1 s 1 I2C1_RestartDisable ]
-"437
-[v _I2C1_StartSend I2C1_StartSend `T(v  1 s 1 I2C1_StartSend ]
-"442
-[v _I2C1_StopSend I2C1_StopSend `T(v  1 s 1 I2C1_StopSend ]
-"447
-[v _I2C1_AckSend I2C1_AckSend `T(v  1 s 1 I2C1_AckSend ]
-"453
-[v _I2C1_NackSend I2C1_NackSend `T(v  1 s 1 I2C1_NackSend ]
-"459
-[v _I2C1_IsNack I2C1_IsNack `(a  1 s 1 I2C1_IsNack ]
-"464
-[v _I2C1_IsData I2C1_IsData `(a  1 s 1 I2C1_IsData ]
-"469
-[v _I2C1_IsAddr I2C1_IsAddr `(a  1 s 1 I2C1_IsAddr ]
-"474
-[v _I2C1_IsRxBufFull I2C1_IsRxBufFull `(a  1 s 1 I2C1_IsRxBufFull ]
-"479
-[v _I2C1_InterruptClear I2C1_InterruptClear `T(v  1 s 1 I2C1_InterruptClear ]
-"484
-[v _I2C1_ErrorInterruptClear I2C1_ErrorInterruptClear `T(v  1 s 1 I2C1_ErrorInterruptClear ]
-"489
-[v _I2C1_StatusFlagsClear I2C1_StatusFlagsClear `T(v  1 s 1 I2C1_StatusFlagsClear ]
 "39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/clock.c
 [v _CLOCK_Initialize CLOCK_Initialize `(v  1 e 1 0 ]
 "40 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/interrupt.c
@@ -135,15 +31,15 @@ I2C_ERROR_BUS_COLLISION 3
 [v _INT_DefaultInterruptHandler INT_DefaultInterruptHandler `(v  1 e 1 0 ]
 "39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/pins.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
-"139
+"135
 [v _PIN_MANAGER_IOC PIN_MANAGER_IOC `(v  1 e 1 0 ]
-"151
+"147
 [v _IO_RC5_ISR IO_RC5_ISR `(v  1 e 1 0 ]
-"166
+"162
 [v _IO_RC5_SetInterruptHandler IO_RC5_SetInterruptHandler `(v  1 e 1 0 ]
-"173
+"169
 [v _IO_RC5_DefaultInterruptHandler IO_RC5_DefaultInterruptHandler `(v  1 e 1 0 ]
-"38 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/system.c
+"39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 "94 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/uart/src/eusart.c
 [v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
@@ -177,14 +73,14 @@ I2C_ERROR_BUS_COLLISION 3
 [v _EUSART_FramingErrorCallbackRegister EUSART_FramingErrorCallbackRegister `(v  1 e 1 0 ]
 "260
 [v _EUSART_OverrunErrorCallbackRegister EUSART_OverrunErrorCallbackRegister `(v  1 e 1 0 ]
-[s S776 . 1 `uc 1 INTEDG 1 0 :1:0 
+[s S36 . 1 `uc 1 INTEDG 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
 "370 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
-[u S781 . 1 `S776 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES781  1 e 1 @11 ]
+[u S41 . 1 `S36 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES41  1 e 1 @11 ]
 "676
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "738
@@ -201,7 +97,7 @@ I2C_ERROR_BUS_COLLISION 3
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "1080
 [v _LATC LATC `VEuc  1 e 1 @24 ]
-[s S1382 . 1 `uc 1 LATC0 1 0 :1:0 
+[s S651 . 1 `uc 1 LATC0 1 0 :1:0 
 `uc 1 LATC1 1 0 :1:1 
 `uc 1 LATC2 1 0 :1:2 
 `uc 1 LATC3 1 0 :1:3 
@@ -211,8 +107,8 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 LATC7 1 0 :1:7 
 ]
 "1097
-[u S1391 . 1 `S1382 1 . 1 0 ]
-[v _LATCbits LATCbits `VES1391  1 e 1 @24 ]
+[u S660 . 1 `S651 1 . 1 0 ]
+[v _LATCbits LATCbits `VES660  1 e 1 @24 ]
 "1142
 [v _LATD LATD `VEuc  1 e 1 @25 ]
 "1204
@@ -227,7 +123,7 @@ I2C_ERROR_BUS_COLLISION 3
 [v _SP1BRGH SP1BRGH `VEuc  1 e 1 @284 ]
 "3992
 [v _RC1STA RC1STA `VEuc  1 e 1 @285 ]
-[s S1183 . 1 `uc 1 RX9D 1 0 :1:0 
+[s S442 . 1 `uc 1 RX9D 1 0 :1:0 
 `uc 1 OERR 1 0 :1:1 
 `uc 1 FERR 1 0 :1:2 
 `uc 1 ADDEN 1 0 :1:3 
@@ -237,11 +133,11 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 SPEN 1 0 :1:7 
 ]
 "4018
-[u S1192 . 1 `S1183 1 . 1 0 ]
-[v _RC1STAbits RC1STAbits `VES1192  1 e 1 @285 ]
+[u S451 . 1 `S442 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES451  1 e 1 @285 ]
 "4172
 [v _TX1STA TX1STA `VEuc  1 e 1 @286 ]
-[s S1204 . 1 `uc 1 TX9D 1 0 :1:0 
+[s S463 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
 `uc 1 SENDB 1 0 :1:3 
@@ -251,11 +147,11 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 CSRC 1 0 :1:7 
 ]
 "4198
-[u S1213 . 1 `S1204 1 . 1 0 ]
-[v _TX1STAbits TX1STAbits `VES1213  1 e 1 @286 ]
+[u S472 . 1 `S463 1 . 1 0 ]
+[v _TX1STAbits TX1STAbits `VES472  1 e 1 @286 ]
 "4352
 [v _BAUD1CON BAUD1CON `VEuc  1 e 1 @287 ]
-[s S1225 . 1 `uc 1 ABDEN 1 0 :1:0 
+[s S484 . 1 `uc 1 ABDEN 1 0 :1:0 
 `uc 1 WUE 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 BRG16 1 0 :1:3 
@@ -265,180 +161,17 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 ABDOVF 1 0 :1:7 
 ]
 "4386
-[u S1234 . 1 `S1225 1 . 1 0 ]
-[v _BAUD1CONbits BAUD1CONbits `VES1234  1 e 1 @287 ]
-"4598
-[v _SSP1BUF SSP1BUF `VEuc  1 e 1 @396 ]
-"4618
-[v _SSP1ADD SSP1ADD `VEuc  1 e 1 @397 ]
-"4808
-[v _SSP1STAT SSP1STAT `VEuc  1 e 1 @399 ]
-[s S247 . 1 `uc 1 BF 1 0 :1:0 
-`uc 1 UA 1 0 :1:1 
-`uc 1 R_nW 1 0 :1:2 
-`uc 1 S 1 0 :1:3 
-`uc 1 P 1 0 :1:4 
-`uc 1 D_nA 1 0 :1:5 
-`uc 1 CKE 1 0 :1:6 
-`uc 1 SMP 1 0 :1:7 
-]
-"4917
-[s S256 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 R_W 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 D_A 1 0 :1:5 
-]
-[s S261 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 nW 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 nA 1 0 :1:5 
-]
-[s S266 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 nWRITE 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 nADDRESS 1 0 :1:5 
-]
-[s S271 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 READ_WRITE 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 DATA_ADDRESS 1 0 :1:5 
-]
-[s S276 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 I2C_READ 1 0 :1:2 
-`uc 1 I2C_START 1 0 :1:3 
-`uc 1 I2C_STOP 1 0 :1:4 
-`uc 1 I2C_DAT 1 0 :1:5 
-]
-[s S282 . 1 `uc 1 BF1 1 0 :1:0 
-`uc 1 UA1 1 0 :1:1 
-`uc 1 R 1 0 :1:2 
-`uc 1 START 1 0 :1:3 
-`uc 1 STOP 1 0 :1:4 
-`uc 1 D 1 0 :1:5 
-`uc 1 CKE1 1 0 :1:6 
-`uc 1 SMP1 1 0 :1:7 
-]
-[s S291 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 RW 1 0 :1:2 
-`uc 1 START1 1 0 :1:3 
-`uc 1 STOP1 1 0 :1:4 
-`uc 1 DA 1 0 :1:5 
-]
-[s S297 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 RW1 1 0 :1:2 
-`uc 1 I2C_START1 1 0 :1:3 
-`uc 1 I2C_STOP2 1 0 :1:4 
-`uc 1 DA1 1 0 :1:5 
-]
-[s S303 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 I2C_READ1 1 0 :1:2 
-`uc 1 S2 1 0 :1:3 
-`uc 1 P2 1 0 :1:4 
-`uc 1 DATA_ADDRESS1 1 0 :1:5 
-]
-[s S309 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 READ_WRITE1 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 D_A1 1 0 :1:5 
-]
-[s S314 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 R_W1 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 D_nA1 1 0 :1:5 
-]
-[s S319 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 R_nW1 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 I2C_DAT1 1 0 :1:5 
-]
-[s S324 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 nW2 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 nA2 1 0 :1:5 
-]
-[s S329 . 1 `uc 1 . 1 0 :2:0 
-`uc 1 nWRITE1 1 0 :1:2 
-`uc 1 . 1 0 :2:3 
-`uc 1 nADDRESS1 1 0 :1:5 
-]
-[u S334 . 1 `S247 1 . 1 0 `S256 1 . 1 0 `S261 1 . 1 0 `S266 1 . 1 0 `S271 1 . 1 0 `S276 1 . 1 0 `S282 1 . 1 0 `S291 1 . 1 0 `S297 1 . 1 0 `S303 1 . 1 0 `S309 1 . 1 0 `S314 1 . 1 0 `S319 1 . 1 0 `S324 1 . 1 0 `S329 1 . 1 0 ]
-[v _SSP1STATbits SSP1STATbits `VES334  1 e 1 @399 ]
-"5172
-[v _SSP1CON1 SSP1CON1 `VEuc  1 e 1 @400 ]
-[s S194 . 1 `uc 1 SSPM 1 0 :4:0 
-`uc 1 CKP 1 0 :1:4 
-`uc 1 SSPEN 1 0 :1:5 
-`uc 1 SSPOV 1 0 :1:6 
-`uc 1 WCOL 1 0 :1:7 
-]
-"5202
-[s S200 . 1 `uc 1 SSPM0 1 0 :1:0 
-`uc 1 SSPM1 1 0 :1:1 
-`uc 1 SSPM2 1 0 :1:2 
-`uc 1 SSPM3 1 0 :1:3 
-]
-[s S205 . 1 `uc 1 SSPM01 1 0 :1:0 
-`uc 1 SSPM11 1 0 :1:1 
-`uc 1 SSPM21 1 0 :1:2 
-`uc 1 SSPM31 1 0 :1:3 
-`uc 1 CKP1 1 0 :1:4 
-`uc 1 SSPEN1 1 0 :1:5 
-`uc 1 SSPOV1 1 0 :1:6 
-`uc 1 WCOL1 1 0 :1:7 
-]
-[u S214 . 1 `S194 1 . 1 0 `S200 1 . 1 0 `S205 1 . 1 0 ]
-[v _SSP1CON1bits SSP1CON1bits `VES214  1 e 1 @400 ]
-"5292
-[v _SSP1CON2 SSP1CON2 `VEuc  1 e 1 @401 ]
-[s S547 . 1 `uc 1 SEN 1 0 :1:0 
-`uc 1 RSEN 1 0 :1:1 
-`uc 1 PEN 1 0 :1:2 
-`uc 1 RCEN 1 0 :1:3 
-`uc 1 ACKEN 1 0 :1:4 
-`uc 1 ACKDT 1 0 :1:5 
-`uc 1 ACKSTAT 1 0 :1:6 
-`uc 1 GCEN 1 0 :1:7 
-]
-"5339
-[s S556 . 1 `uc 1 . 1 0 :1:0 
-`uc 1 ADMSK 1 0 :5:1 
-]
-[s S559 . 1 `uc 1 . 1 0 :1:0 
-`uc 1 ADMSK1 1 0 :1:1 
-`uc 1 ADMSK2 1 0 :1:2 
-`uc 1 ADMSK3 1 0 :1:3 
-`uc 1 ADMSK4 1 0 :1:4 
-`uc 1 ADMSK5 1 0 :1:5 
-]
-[s S566 . 1 `uc 1 SEN1 1 0 :1:0 
-`uc 1 ADMSK11 1 0 :1:1 
-`uc 1 ADMSK21 1 0 :1:2 
-`uc 1 ADMSK31 1 0 :1:3 
-`uc 1 ACKEN1 1 0 :1:4 
-`uc 1 ACKDT1 1 0 :1:5 
-`uc 1 ACKSTAT1 1 0 :1:6 
-`uc 1 GCEN1 1 0 :1:7 
-]
-[s S575 . 1 `uc 1 . 1 0 :1:0 
-`uc 1 RSEN1 1 0 :1:1 
-`uc 1 PEN1 1 0 :1:2 
-`uc 1 RCEN1 1 0 :1:3 
-`uc 1 ADMSK41 1 0 :1:4 
-`uc 1 ADMSK51 1 0 :1:5 
-]
-[u S582 . 1 `S547 1 . 1 0 `S556 1 . 1 0 `S559 1 . 1 0 `S566 1 . 1 0 `S575 1 . 1 0 ]
-[v _SSP1CON2bits SSP1CON2bits `VES582  1 e 1 @401 ]
-"5479
-[v _SSP1CON3 SSP1CON3 `VEuc  1 e 1 @402 ]
-[s S763 . 1 `uc 1 INTF 1 0 :1:0 
+[u S493 . 1 `S484 1 . 1 0 ]
+[v _BAUD1CONbits BAUD1CONbits `VES493  1 e 1 @287 ]
+[s S23 . 1 `uc 1 INTF 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIF 1 0 :1:4 
 `uc 1 TMR0IF 1 0 :1:5 
 ]
 "21263
-[u S768 . 1 `S763 1 . 1 0 ]
-[v _PIR0bits PIR0bits `VES768  1 e 1 @1804 ]
-[s S441 . 1 `uc 1 SSP1IF 1 0 :1:0 
+[u S28 . 1 `S23 1 . 1 0 ]
+[v _PIR0bits PIR0bits `VES28  1 e 1 @1804 ]
+[s S505 . 1 `uc 1 SSP1IF 1 0 :1:0 
 `uc 1 BCL1IF 1 0 :1:1 
 `uc 1 SSP2IF 1 0 :1:2 
 `uc 1 BCL2IF 1 0 :1:3 
@@ -446,16 +179,16 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 RCIF 1 0 :1:5 
 ]
 "21370
-[u S448 . 1 `S441 1 . 1 0 ]
-[v _PIR3bits PIR3bits `VES448  1 e 1 @1807 ]
-[s S799 . 1 `uc 1 INTE 1 0 :1:0 
+[u S512 . 1 `S505 1 . 1 0 ]
+[v _PIR3bits PIR3bits `VES512  1 e 1 @1807 ]
+[s S59 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "21685
-[u S804 . 1 `S799 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES804  1 e 1 @1814 ]
+[u S64 . 1 `S59 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES64  1 e 1 @1814 ]
 "23431
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "23571
@@ -466,16 +199,8 @@ I2C_ERROR_BUS_COLLISION 3
 [v _OSCTUNE OSCTUNE `VEuc  1 e 1 @2194 ]
 "23777
 [v _OSCFRQ OSCFRQ `VEuc  1 e 1 @2195 ]
-"31316
-[v _SSP1CLKPPS SSP1CLKPPS `VEuc  1 e 1 @7877 ]
-"31368
-[v _SSP1DATPPS SSP1DATPPS `VEuc  1 e 1 @7878 ]
 "31628
 [v _RXPPS RXPPS `VEuc  1 e 1 @7883 ]
-"32682
-[v _RC3PPS RC3PPS `VEuc  1 e 1 @7971 ]
-"32732
-[v _RC4PPS RC4PPS `VEuc  1 e 1 @7972 ]
 "32832
 [v _RC6PPS RC6PPS `VEuc  1 e 1 @7974 ]
 "33482
@@ -526,7 +251,7 @@ I2C_ERROR_BUS_COLLISION 3
 [v _IOCCN IOCCN `VEuc  1 e 1 @8020 ]
 "35156
 [v _IOCCF IOCCF `VEuc  1 e 1 @8021 ]
-[s S920 . 1 `uc 1 IOCCF0 1 0 :1:0 
+[s S180 . 1 `uc 1 IOCCF0 1 0 :1:0 
 `uc 1 IOCCF1 1 0 :1:1 
 `uc 1 IOCCF2 1 0 :1:2 
 `uc 1 IOCCF3 1 0 :1:3 
@@ -536,10 +261,10 @@ I2C_ERROR_BUS_COLLISION 3
 `uc 1 IOCCF7 1 0 :1:7 
 ]
 "35173
-[u S929 . 1 `S920 1 . 1 0 ]
+[u S189 . 1 `S180 1 . 1 0 ]
 "35173
 "35173
-[v _IOCCFbits IOCCFbits `VES929  1 e 1 @8021 ]
+[v _IOCCFbits IOCCFbits `VES189  1 e 1 @8021 ]
 "35342
 [v _ANSELD ANSELD `VEuc  1 e 1 @8025 ]
 "35404
@@ -566,35 +291,28 @@ I2C_ERROR_BUS_COLLISION 3
 [v _IOCEN IOCEN `VEuc  1 e 1 @8042 ]
 "35990
 [v _IOCEF IOCEF `VEuc  1 e 1 @8043 ]
-"94 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/i2c_host/src/mssp1.c
-[v _I2C1_Callback I2C1_Callback `*.37(v  1 s 2 I2C1_Callback ]
-[s S142 . 13 `a 1 busy 1 0 `us 1 address 2 1 `*.30uc 1 writePtr 1 3 `ui 1 writeLength 2 4 `*.2uc 1 readPtr 2 6 `ui 1 readLength 2 8 `a 1 switchToRead 1 10 `E12156 1 errorState 1 11 `E12165 1 state 1 12 ]
-"95
-[v _i2c1Status i2c1Status `VES142  1 e 13 0 ]
-"97
-[v _i2c1_eventTable i2c1_eventTable `DC[9]*.37(E12165  1 e 18 0 ]
 "38 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/interrupt.c
 [v _INT_InterruptHandler INT_InterruptHandler `*.37(v  1 e 2 0 ]
 "37 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/pins.c
 [v _IO_RC5_InterruptHandler IO_RC5_InterruptHandler `*.37(v  1 e 2 0 ]
-[s S1158 . 1 `uc 1 perr 1 0 :1:0 
+[s S417 . 1 `uc 1 perr 1 0 :1:0 
 `uc 1 ferr 1 0 :1:1 
 `uc 1 oerr 1 0 :1:2 
 `uc 1 reserved 1 0 :5:3 
 ]
 "77 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/uart/src/eusart.c
-[u S1163 . 2 `S1158 1 . 1 0 `ui 1 status 2 0 ]
-[v _eusartRxLastError eusartRxLastError `VES1163  1 s 2 eusartRxLastError ]
+[u S422 . 2 `S417 1 . 1 0 `ui 1 status 2 0 ]
+[v _eusartRxLastError eusartRxLastError `VES422  1 s 2 eusartRxLastError ]
 "83
 [v _EUSART_FramingErrorHandler EUSART_FramingErrorHandler `*.37(v  1 s 2 EUSART_FramingErrorHandler ]
 "84
 [v _EUSART_OverrunErrorHandler EUSART_OverrunErrorHandler `*.37(v  1 s 2 EUSART_OverrunErrorHandler ]
-"53 D:\BackJumpBF\repo\BackJumpBF.X\main.c
+"42 D:\BackJumpBF\repo\BackJumpBF.X\main.c
 [v _main main `(i  1 e 2 0 ]
 {
-"91
+"68
 } 0
-"38 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/system.c
+"39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
 "45
@@ -602,13 +320,13 @@ I2C_ERROR_BUS_COLLISION 3
 "39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/pins.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
-"137
+"133
 } 0
-"166
+"162
 [v _IO_RC5_SetInterruptHandler IO_RC5_SetInterruptHandler `(v  1 e 1 0 ]
 {
 [v IO_RC5_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
-"168
+"164
 } 0
 "40 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/interrupt.c
 [v _INTERRUPT_Initialize INTERRUPT_Initialize `(v  1 e 1 0 ]
@@ -620,11 +338,6 @@ I2C_ERROR_BUS_COLLISION 3
 {
 [v INT_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
 "92
-} 0
-"112 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/i2c_host/src/mssp1.c
-[v _I2C1_Initialize I2C1_Initialize `(v  1 e 1 0 ]
-{
-"125
 } 0
 "94 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/uart/src/eusart.c
 [v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
@@ -648,66 +361,33 @@ I2C_ERROR_BUS_COLLISION 3
 {
 "55
 } 0
-"37 D:\BackJumpBF\repo\BackJumpBF.X\main.c
-[v _MCP23017_WriteReg MCP23017_WriteReg `(v  1 e 1 0 ]
+"12 D:\BackJumpBF\repo\BackJumpBF.X\i2c.c
+[v _I2C_Init I2C_Init `(v  1 e 1 0 ]
 {
-[v MCP23017_WriteReg@reg reg `uc  1 p 1 wreg ]
-"39
-[v MCP23017_WriteReg@buf buf `[2]uc  1 a 2 8 ]
-"37
-[v MCP23017_WriteReg@reg reg `uc  1 p 1 wreg ]
-[v MCP23017_WriteReg@data data `uc  1 p 1 6 ]
-"40
-[v MCP23017_WriteReg@reg reg `uc  1 p 1 7 ]
-"47
-} 1
-"136 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/i2c_host/src/mssp1.c
-[v _I2C1_Write I2C1_Write `(a  1 e 1 0 ]
-{
-[v I2C1_Write@address address `us  1 p 2 1 ]
-[v I2C1_Write@data data `*.30uc  1 p 1 3 ]
-[v I2C1_Write@dataLength dataLength `ui  1 p 2 4 ]
-"153
+"15
 } 0
-"241
-[v _I2C1_WriteStart I2C1_WriteStart `(v  1 s 1 I2C1_WriteStart ]
+"19
+[v _I2C_SDAhigh I2C_SDAhigh `(v  1 e 1 0 ]
 {
-"245
-} 0
-"437
-[v _I2C1_StartSend I2C1_StartSend `T(v  1 s 1 I2C1_StartSend ]
-{
-"440
-} 0
-"200
-[v _I2C1_IsBusy I2C1_IsBusy `(a  1 e 1 0 ]
-{
-"203
-} 0
-"193
-[v _I2C1_ErrorGet I2C1_ErrorGet `(E12156  1 e 1 0 ]
-{
-"195
-[v I2C1_ErrorGet@retErrorState retErrorState `E12156  1 a 1 0 ]
-"198
+"22
 } 0
 "59 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/interrupt.c
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
 {
 "70
 } 0
-"139 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/pins.c
+"135 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/pins.c
 [v _PIN_MANAGER_IOC PIN_MANAGER_IOC `(v  1 e 1 0 ]
 {
-"146
+"142
 } 0
-"151
+"147
 [v _IO_RC5_ISR IO_RC5_ISR `(v  1 e 1 0 ]
 {
-"161
+"157
 } 0
-"173
+"169
 [v _IO_RC5_DefaultInterruptHandler IO_RC5_DefaultInterruptHandler `(v  1 e 1 0 ]
 {
-"176
+"172
 } 0

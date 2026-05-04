@@ -21110,112 +21110,6 @@ void EUSART_FramingErrorCallbackRegister(void (* callbackHandler)(void));
 
 void EUSART_OverrunErrorCallbackRegister(void (* callbackHandler)(void));
 # 45 "./mcc_generated_files/system/system.h" 2
-# 1 "./mcc_generated_files/system/../i2c_host/mssp1.h" 1
-# 45 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-# 1 "./mcc_generated_files/system/../i2c_host/i2c_host_event_types.h" 1
-# 39 "./mcc_generated_files/system/../i2c_host/i2c_host_event_types.h"
-# 1 "./mcc_generated_files/system/../i2c_host/i2c_host_types.h" 1
-# 44 "./mcc_generated_files/system/../i2c_host/i2c_host_types.h"
-typedef enum
-{
-    I2C_ERROR_NONE,
-    I2C_ERROR_ADDR_NACK,
-    I2C_ERROR_DATA_NACK,
-    I2C_ERROR_BUS_COLLISION,
-} i2c_host_error_t;
-# 62 "./mcc_generated_files/system/../i2c_host/i2c_host_types.h"
-typedef struct i2c_transfer_setup
-{
-  uint32_t clkSpeed;
-} i2c_host_transfer_setup_t;
-# 40 "./mcc_generated_files/system/../i2c_host/i2c_host_event_types.h" 2
-
-
-
-
-
-
-
-
-typedef enum
-{
-    I2C_STATE_IDLE = 0,
-    I2C_STATE_SEND_RD_ADDR,
-    I2C_STATE_SEND_WR_ADDR,
-    I2C_STATE_TX,
-    I2C_STATE_RX,
-    I2C_STATE_NACK,
-    I2C_STATE_ERROR,
-    I2C_STATE_STOP,
-    I2C_STATE_RESET
-} i2c_host_event_states_t;
-
-
-
-
-
-
-typedef struct
-{
-    _Bool busy;
-    uint16_t address;
-    uint8_t *writePtr;
-    size_t writeLength;
-    uint8_t *readPtr;
-    size_t readLength;
-    _Bool switchToRead;
-    i2c_host_error_t errorState;
-    i2c_host_event_states_t state;
-} i2c_host_event_status_t;
-
-typedef i2c_host_event_states_t (*i2c1eventHandler)(void);
-
-extern volatile i2c_host_event_status_t i2c1Status;
-extern const i2c1eventHandler i2c1_eventTable[(9)];
-# 46 "./mcc_generated_files/system/../i2c_host/mssp1.h" 2
-# 1 "./mcc_generated_files/system/../i2c_host/i2c_host_interface.h" 1
-# 51 "./mcc_generated_files/system/../i2c_host/i2c_host_interface.h"
-typedef struct
-{
-    void (*Initialize)(void);
-    void (*Deinitialize)(void);
-    _Bool (*Write)(uint16_t address, uint8_t *data, size_t dataLength);
-    _Bool (*Read)(uint16_t address, uint8_t *data, size_t dataLength);
-    _Bool (*WriteRead)(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-    _Bool (*TransferSetup)(struct i2c_transfer_setup* setup, uint32_t srcClkFreq);
-    i2c_host_error_t (*ErrorGet)(void);
-    _Bool (*IsBusy)(void);
-    void (*CallbackRegister)(void (*callback)(void));
-    void (*Tasks)(void);
-}i2c_host_interface_t;
-# 47 "./mcc_generated_files/system/../i2c_host/mssp1.h" 2
-# 69 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-extern const i2c_host_interface_t I2C1_Host;
-# 78 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-void I2C1_Initialize(void);
-# 87 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-void I2C1_Deinitialize(void);
-# 118 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-_Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength);
-# 149 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-_Bool I2C1_Read(uint16_t address, uint8_t *data, size_t dataLength);
-# 184 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-_Bool I2C1_WriteRead(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-# 195 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-i2c_host_error_t I2C1_ErrorGet(void);
-# 206 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-_Bool I2C1_IsBusy(void);
-# 233 "./mcc_generated_files/system/../i2c_host/mssp1.h"
-void I2C1_CallbackRegister(void (*callbackHandler)(void));
-
-
-
-
-
-
-
-void I2C1_Tasks(void);
-# 46 "./mcc_generated_files/system/system.h" 2
 # 1 "./mcc_generated_files/system/../system/interrupt.h" 1
 # 85 "./mcc_generated_files/system/../system/interrupt.h"
 void INTERRUPT_Initialize (void);
@@ -21229,22 +21123,19 @@ void INT_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT_InterruptHandler)(void);
 # 175 "./mcc_generated_files/system/../system/interrupt.h"
 void INT_DefaultInterruptHandler(void);
-# 47 "./mcc_generated_files/system/system.h" 2
-# 56 "./mcc_generated_files/system/system.h"
+# 46 "./mcc_generated_files/system/system.h" 2
+# 55 "./mcc_generated_files/system/system.h"
 void SYSTEM_Initialize(void);
 # 36 "main.c" 2
+# 1 "./i2c.h" 1
 
-void MCP23017_WriteReg(uint8_t reg, uint8_t data)
-{
-    uint8_t buf[2];
-    buf[0] = reg;
-    buf[1] = data;
 
-    I2C1_Write(0x27, buf, 2);
 
-    while (I2C1_IsBusy())
-        ;
-}
+
+
+void I2C_Init(void);
+void I2C_SDAhigh(void);
+# 37 "main.c" 2
 
 
 
@@ -21269,23 +21160,11 @@ int main(void)
 
 
 
-    MCP23017_WriteReg(0x00, 0x00);
+    I2C_Init();
+
     while (1)
     {
-        MCP23017_WriteReg(0x12, 0x01);
         _delay((unsigned long)((1000)*(32000000U/4000.0)));
-
-        if (I2C1_ErrorGet() == I2C_ERROR_NONE)
-        {
-            do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
-        }
-
-        MCP23017_WriteReg(0x12, 0x01);
-        _delay((unsigned long)((1000)*(32000000U/4000.0)));
-
-        if (I2C1_ErrorGet() != I2C_ERROR_NONE)
-        {
-            do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
-        }
+        do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
     }
 }

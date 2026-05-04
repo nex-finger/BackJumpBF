@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/i2c_host/src/mssp1.c"
+# 1 "i2c.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 295 "<built-in>" 3
@@ -6,8 +6,15 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/i2c_host/src/mssp1.c" 2
-# 36 "mcc_generated_files/i2c_host/src/mssp1.c"
+# 1 "i2c.c" 2
+
+
+
+
+
+
+# 1 "./mcc_generated_files/system/system.h" 1
+# 39 "./mcc_generated_files/system/system.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -20722,28 +20729,20 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
-# 37 "mcc_generated_files/i2c_host/src/mssp1.c" 2
-# 1 "mcc_generated_files/i2c_host/src/../mssp1.h" 1
-# 44 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 40 "./mcc_generated_files/system/system.h" 2
+
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdbool.h" 1 3
-# 45 "mcc_generated_files/i2c_host/src/../mssp1.h" 2
-# 1 "mcc_generated_files/i2c_host/src/../i2c_host_event_types.h" 1
-# 39 "mcc_generated_files/i2c_host/src/../i2c_host_event_types.h"
-# 1 "mcc_generated_files/i2c_host/src/../i2c_host_types.h" 1
-# 44 "mcc_generated_files/i2c_host/src/../i2c_host_types.h"
-typedef enum
-{
-    I2C_ERROR_NONE,
-    I2C_ERROR_ADDR_NACK,
-    I2C_ERROR_DATA_NACK,
-    I2C_ERROR_BUS_COLLISION,
-} i2c_host_error_t;
-# 62 "mcc_generated_files/i2c_host/src/../i2c_host_types.h"
-typedef struct i2c_transfer_setup
-{
-  uint32_t clkSpeed;
-} i2c_host_transfer_setup_t;
-# 40 "mcc_generated_files/i2c_host/src/../i2c_host_event_types.h" 2
+# 42 "./mcc_generated_files/system/system.h" 2
+# 1 "./mcc_generated_files/system/config_bits.h" 1
+# 39 "./mcc_generated_files/system/config_bits.h"
+# 1 "./mcc_generated_files/system/../system/clock.h" 1
+# 56 "./mcc_generated_files/system/../system/clock.h"
+void CLOCK_Initialize(void);
+# 40 "./mcc_generated_files/system/config_bits.h" 2
+# 43 "./mcc_generated_files/system/system.h" 2
+# 1 "./mcc_generated_files/system/../system/pins.h" 1
+# 249 "./mcc_generated_files/system/../system/pins.h"
+void PIN_MANAGER_Initialize (void);
 
 
 
@@ -20751,77 +20750,7 @@ typedef struct i2c_transfer_setup
 
 
 
-
-typedef enum
-{
-    I2C_STATE_IDLE = 0,
-    I2C_STATE_SEND_RD_ADDR,
-    I2C_STATE_SEND_WR_ADDR,
-    I2C_STATE_TX,
-    I2C_STATE_RX,
-    I2C_STATE_NACK,
-    I2C_STATE_ERROR,
-    I2C_STATE_STOP,
-    I2C_STATE_RESET
-} i2c_host_event_states_t;
-
-
-
-
-
-
-typedef struct
-{
-    _Bool busy;
-    uint16_t address;
-    uint8_t *writePtr;
-    size_t writeLength;
-    uint8_t *readPtr;
-    size_t readLength;
-    _Bool switchToRead;
-    i2c_host_error_t errorState;
-    i2c_host_event_states_t state;
-} i2c_host_event_status_t;
-
-typedef i2c_host_event_states_t (*i2c1eventHandler)(void);
-
-extern volatile i2c_host_event_status_t i2c1Status;
-extern const i2c1eventHandler i2c1_eventTable[(9)];
-# 46 "mcc_generated_files/i2c_host/src/../mssp1.h" 2
-# 1 "mcc_generated_files/i2c_host/src/../i2c_host_interface.h" 1
-# 51 "mcc_generated_files/i2c_host/src/../i2c_host_interface.h"
-typedef struct
-{
-    void (*Initialize)(void);
-    void (*Deinitialize)(void);
-    _Bool (*Write)(uint16_t address, uint8_t *data, size_t dataLength);
-    _Bool (*Read)(uint16_t address, uint8_t *data, size_t dataLength);
-    _Bool (*WriteRead)(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-    _Bool (*TransferSetup)(struct i2c_transfer_setup* setup, uint32_t srcClkFreq);
-    i2c_host_error_t (*ErrorGet)(void);
-    _Bool (*IsBusy)(void);
-    void (*CallbackRegister)(void (*callback)(void));
-    void (*Tasks)(void);
-}i2c_host_interface_t;
-# 47 "mcc_generated_files/i2c_host/src/../mssp1.h" 2
-# 69 "mcc_generated_files/i2c_host/src/../mssp1.h"
-extern const i2c_host_interface_t I2C1_Host;
-# 78 "mcc_generated_files/i2c_host/src/../mssp1.h"
-void I2C1_Initialize(void);
-# 87 "mcc_generated_files/i2c_host/src/../mssp1.h"
-void I2C1_Deinitialize(void);
-# 118 "mcc_generated_files/i2c_host/src/../mssp1.h"
-_Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength);
-# 149 "mcc_generated_files/i2c_host/src/../mssp1.h"
-_Bool I2C1_Read(uint16_t address, uint8_t *data, size_t dataLength);
-# 184 "mcc_generated_files/i2c_host/src/../mssp1.h"
-_Bool I2C1_WriteRead(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-# 195 "mcc_generated_files/i2c_host/src/../mssp1.h"
-i2c_host_error_t I2C1_ErrorGet(void);
-# 206 "mcc_generated_files/i2c_host/src/../mssp1.h"
-_Bool I2C1_IsBusy(void);
-# 233 "mcc_generated_files/i2c_host/src/../mssp1.h"
-void I2C1_CallbackRegister(void (*callbackHandler)(void));
+void PIN_MANAGER_IOC(void);
 
 
 
@@ -20829,461 +20758,400 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 
 
-void I2C1_Tasks(void);
-# 38 "mcc_generated_files/i2c_host/src/mssp1.c" 2
-
-
-static void I2C1_ReadStart(void);
-static void I2C1_WriteStart(void);
-static void I2C1_Close(void);
-static void I2C1_EventHandler(void);
-static void I2C1_ErrorEventHandler(void);
-
-
-static uint8_t I2C1_DataReceive(void);
-static void I2C1_DataTransmit(uint8_t data);
-static __attribute__((inline)) void I2C1_BusReset(void);
-static __attribute__((inline)) void I2C1_ReceiveEnable(void);
-static __attribute__((inline)) void I2C1_RestartEnable(void);
-static __attribute__((inline)) void I2C1_RestartDisable(void);
-static __attribute__((inline)) void I2C1_StartSend(void);
-static __attribute__((inline)) void I2C1_StopSend(void);
-static __attribute__((inline)) void I2C1_AckSend(void);
-static __attribute__((inline)) void I2C1_NackSend(void);
-static _Bool I2C1_IsNack(void);
-static _Bool I2C1_IsData(void);
-static _Bool I2C1_IsAddr(void);
-static _Bool I2C1_IsRxBufFull(void);
-static __attribute__((inline)) void I2C1_InterruptClear(void);
-static __attribute__((inline)) void I2C1_ErrorInterruptClear(void);
-static __attribute__((inline)) void I2C1_StatusFlagsClear(void);
-
-static i2c_host_event_states_t I2C1_EVENT_IDLE(void);
-static i2c_host_event_states_t I2C1_EVENT_SEND_RD_ADDR(void);
-static i2c_host_event_states_t I2C1_EVENT_SEND_WR_ADDR(void);
-static i2c_host_event_states_t I2C1_EVENT_TX(void);
-static i2c_host_event_states_t I2C1_EVENT_RX(void);
-static i2c_host_event_states_t I2C1_EVENT_NACK(void);
-static i2c_host_event_states_t I2C1_EVENT_ERROR(void);
-static i2c_host_event_states_t I2C1_EVENT_STOP(void);
-static i2c_host_event_states_t I2C1_EVENT_RESET(void);
+void IO_RC5_ISR(void);
+# 275 "./mcc_generated_files/system/../system/pins.h"
+void IO_RC5_SetInterruptHandler(void (* InterruptHandler)(void));
+# 286 "./mcc_generated_files/system/../system/pins.h"
+extern void (*IO_RC5_InterruptHandler)(void);
+# 297 "./mcc_generated_files/system/../system/pins.h"
+void IO_RC5_DefaultInterruptHandler(void);
+# 44 "./mcc_generated_files/system/system.h" 2
+# 1 "./mcc_generated_files/system/../uart/eusart.h" 1
+# 45 "./mcc_generated_files/system/../uart/eusart.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 1 3
+# 24 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
+# 12 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef void * va_list[1];
 
 
 
 
-const i2c_host_interface_t I2C1_Host = {
-    .Initialize = I2C1_Initialize,
-    .Deinitialize = I2C1_Deinitialize,
-    .Write = I2C1_Write,
-    .Read = I2C1_Read,
-    .WriteRead = I2C1_WriteRead,
-    .TransferSetup = ((void*)0),
-    .ErrorGet = I2C1_ErrorGet,
-    .IsBusy = I2C1_IsBusy,
-    .CallbackRegister = I2C1_CallbackRegister,
-    .Tasks = I2C1_Tasks
+typedef void * __isoc_va_list[1];
+# 143 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef short ssize_t;
+# 255 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef long long off_t;
+# 409 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef struct _IO_FILE FILE;
+# 25 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 2 3
+# 52 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
+typedef union _G_fpos64_t {
+ char __opaque[16];
+ double __align;
+} fpos_t;
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
+
+
+
+
+
+FILE *fopen(const char *restrict, const char *restrict);
+FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
+int fclose(FILE *);
+
+int remove(const char *);
+int rename(const char *, const char *);
+
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+void clearerr(FILE *);
+
+int fseek(FILE *, long, int);
+long ftell(FILE *);
+void rewind(FILE *);
+
+int fgetpos(FILE *restrict, fpos_t *restrict);
+int fsetpos(FILE *, const fpos_t *);
+
+size_t fread(void *restrict, size_t, size_t, FILE *restrict);
+size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+
+int fgetc(FILE *);
+int getc(FILE *);
+int getchar(void);
+
+
+
+
+
+int ungetc(int, FILE *);
+int getch(void);
+
+int fputc(int, FILE *);
+int putc(int, FILE *);
+int putchar(int);
+
+
+
+
+
+void putch(char);
+
+char *fgets(char *restrict, int, FILE *restrict);
+
+char *gets(char *);
+
+
+int fputs(const char *restrict, FILE *restrict);
+int puts(const char *);
+
+__attribute__((__format__(__printf__, 1, 2)))
+int printf(const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int fprintf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int sprintf(char *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 3, 4)))
+int snprintf(char *restrict, size_t, const char *restrict, ...);
+
+__attribute__((__format__(__printf__, 1, 0)))
+int vprintf(const char *restrict, __isoc_va_list);
+int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 2, 0)))
+int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 3, 0)))
+int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
+
+__attribute__((__format__(__scanf__, 1, 2)))
+int scanf(const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int fscanf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int sscanf(const char *restrict, const char *restrict, ...);
+
+__attribute__((__format__(__scanf__, 1, 0)))
+int vscanf(const char *restrict, __isoc_va_list);
+int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__scanf__, 2, 0)))
+int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
+
+void perror(const char *);
+
+int setvbuf(FILE *restrict, char *restrict, int, size_t);
+void setbuf(FILE *restrict, char *restrict);
+
+char *tmpnam(char *);
+FILE *tmpfile(void);
+
+
+
+
+FILE *fmemopen(void *restrict, size_t, const char *restrict);
+FILE *open_memstream(char **, size_t *);
+FILE *fdopen(int, const char *);
+FILE *popen(const char *, const char *);
+int pclose(FILE *);
+int fileno(FILE *);
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+int dprintf(int, const char *restrict, ...);
+int vdprintf(int, const char *restrict, __isoc_va_list);
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
+ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
+int renameat(int, const char *, int, const char *);
+char *ctermid(char *);
+
+
+
+
+
+
+
+char *tempnam(const char *, const char *);
+# 46 "./mcc_generated_files/system/../uart/eusart.h" 2
+# 1 "./mcc_generated_files/system/system.h" 1
+# 47 "./mcc_generated_files/system/../uart/eusart.h" 2
+# 1 "./mcc_generated_files/system/../uart/uart_drv_interface.h" 1
+# 41 "./mcc_generated_files/system/../uart/uart_drv_interface.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stddef.h" 1 3
+# 19 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stddef.h" 3
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
+# 138 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef int ptrdiff_t;
+# 20 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stddef.h" 2 3
+# 42 "./mcc_generated_files/system/../uart/uart_drv_interface.h" 2
+# 1 "./mcc_generated_files/system/../uart/uart_types.h" 1
+# 57 "./mcc_generated_files/system/../uart/uart_types.h"
+enum UART_STANDARD_BAUDS{
+UART_110 = 0,
+UART_300 = 1,
+UART_600 = 2,
+UART_1200 = 3,
+UART_2400 = 4,
+UART_4800 = 5,
+UART_9600 = 6,
+UART_14400 = 7,
+UART_19200 = 8,
+UART_38400 = 9,
+UART_57600 = 10,
+UART_115200 = 11,
+UART_230400 = 12,
+UART_460800 = 13,
+UART_921600 = 14,
 };
+# 43 "./mcc_generated_files/system/../uart/uart_drv_interface.h" 2
+# 58 "./mcc_generated_files/system/../uart/uart_drv_interface.h"
+typedef struct {
+void (*Initialize)(void);
+void (*Deinitialize)(void);
+uint8_t (*Read)(void);
+void (*Write)(uint8_t);
+_Bool (*IsRxReady)(void);
+_Bool (*IsTxReady)(void);
+_Bool (*IsTxDone)(void);
+void (*TransmitEnable)(void);
+void (*TransmitDisable)(void);
+void (*AutoBaudSet)(_Bool enable);
+_Bool (*AutoBaudQuery)(void);
+_Bool (*AutoBaudEventEnableGet)(void);
+void (*BRGCountSet)(uint32_t brgValue);
+uint32_t (*BRGCountGet)(void);
+void (*BaudRateSet)(uint32_t baudRate);
+uint32_t (*BaudRateGet)(void);
+size_t (*ErrorGet)(void);
+void (*TxCompleteCallbackRegister)(void (*CallbackHandler) (void));
+void (*RxCompleteCallbackRegister)(void (*CallbackHandler) (void));
+void (*TxCollisionCallbackRegister)(void (*CallbackHandler) (void));
+void (*FramingErrorCallbackRegister)(void (*CallbackHandler) (void));
+void (*OverrunErrorCallbackRegister)(void (*CallbackHandler) (void));
+void (*ParityErrorCallbackRegister)(void (*CallbackHandler) (void));
+void (*EventCallbackRegister)(void (*CallbackHandler) (void));
+}uart_drv_interface_t;
+# 48 "./mcc_generated_files/system/../uart/eusart.h" 2
+# 92 "./mcc_generated_files/system/../uart/eusart.h"
+typedef union {
+    struct {
+        uint8_t perr : 1;
+        uint8_t ferr : 1;
+        uint8_t oerr : 1;
+        uint8_t reserved : 5;
+    };
+    size_t status;
+}eusart_status_t;
+# 110 "./mcc_generated_files/system/../uart/eusart.h"
+extern const uart_drv_interface_t UART1;
+# 119 "./mcc_generated_files/system/../uart/eusart.h"
+void EUSART_Initialize(void);
 
 
 
 
-static void (*I2C1_Callback)(void) = ((void*)0);
-volatile i2c_host_event_status_t i2c1Status = {0};
 
-const i2c1eventHandler i2c1_eventTable[] = {
-    I2C1_EVENT_IDLE,
-    I2C1_EVENT_SEND_RD_ADDR,
-    I2C1_EVENT_SEND_WR_ADDR,
-    I2C1_EVENT_TX,
-    I2C1_EVENT_RX,
-    I2C1_EVENT_NACK,
-    I2C1_EVENT_ERROR,
-    I2C1_EVENT_STOP,
-    I2C1_EVENT_RESET
-};
+
+
+void EUSART_Deinitialize(void);
 
 
 
 
-void I2C1_Initialize(void)
+
+
+
+void EUSART_Enable(void);
+
+
+
+
+
+
+
+void EUSART_Disable(void);
+# 152 "./mcc_generated_files/system/../uart/eusart.h"
+void EUSART_TransmitEnable(void);
+
+
+
+
+
+
+
+void EUSART_TransmitDisable(void);
+# 169 "./mcc_generated_files/system/../uart/eusart.h"
+void EUSART_ReceiveEnable(void);
+
+
+
+
+
+
+
+void EUSART_ReceiveDisable(void);
+# 186 "./mcc_generated_files/system/../uart/eusart.h"
+void EUSART_SendBreakControlEnable(void);
+
+
+
+
+
+
+
+void EUSART_SendBreakControlDisable(void);
+
+
+
+
+
+
+
+void EUSART_AutoBaudSet(_Bool enable);
+
+
+
+
+
+
+
+_Bool EUSART_AutoBaudQuery(void);
+
+
+
+
+
+
+
+_Bool EUSART_IsAutoBaudDetectOverflow(void);
+
+
+
+
+
+
+
+void EUSART_AutoBaudDetectOverflowReset(void);
+# 235 "./mcc_generated_files/system/../uart/eusart.h"
+_Bool EUSART_IsRxReady(void);
+# 244 "./mcc_generated_files/system/../uart/eusart.h"
+_Bool EUSART_IsTxReady(void);
+# 253 "./mcc_generated_files/system/../uart/eusart.h"
+_Bool EUSART_IsTxDone(void);
+
+
+
+
+
+
+
+size_t EUSART_ErrorGet(void);
+# 271 "./mcc_generated_files/system/../uart/eusart.h"
+uint8_t EUSART_Read(void);
+# 281 "./mcc_generated_files/system/../uart/eusart.h"
+void EUSART_Write(uint8_t txData);
+
+
+
+
+
+
+
+void EUSART_FramingErrorCallbackRegister(void (* callbackHandler)(void));
+
+
+
+
+
+
+
+void EUSART_OverrunErrorCallbackRegister(void (* callbackHandler)(void));
+# 45 "./mcc_generated_files/system/system.h" 2
+# 1 "./mcc_generated_files/system/../system/interrupt.h" 1
+# 85 "./mcc_generated_files/system/../system/interrupt.h"
+void INTERRUPT_Initialize (void);
+# 139 "./mcc_generated_files/system/../system/interrupt.h"
+void INT_ISR(void);
+# 148 "./mcc_generated_files/system/../system/interrupt.h"
+void INT_CallBack(void);
+# 157 "./mcc_generated_files/system/../system/interrupt.h"
+void INT_SetInterruptHandler(void (* InterruptHandler)(void));
+# 166 "./mcc_generated_files/system/../system/interrupt.h"
+extern void (*INT_InterruptHandler)(void);
+# 175 "./mcc_generated_files/system/../system/interrupt.h"
+void INT_DefaultInterruptHandler(void);
+# 46 "./mcc_generated_files/system/system.h" 2
+# 55 "./mcc_generated_files/system/system.h"
+void SYSTEM_Initialize(void);
+# 8 "i2c.c" 2
+# 1 "./i2c.h" 1
+
+
+
+
+
+void I2C_Init(void);
+void I2C_SDAhigh(void);
+# 9 "i2c.c" 2
+
+
+
+void I2C_Init(void)
 {
-
-    SSP1STAT = 0x80;
-
-    SSP1CON1 = 0x8;
-
-    SSP1CON2 = 0x0;
-
-    SSP1CON3 = 0x0;
-
-    SSP1ADD = 0x4F;
-    SSP1CON1bits.SSPEN = 1;
-}
-
-void I2C1_Deinitialize(void)
-{
-    SSP1STAT = 0x00;
-    SSP1CON1 = 0x00;
-    SSP1CON2 = 0x00;
-    SSP1CON3 = 0x00;
-    SSP1ADD = 0x00;
-}
-
-_Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength)
-{
-    _Bool retStatus = 0;
-    if (!I2C1_IsBusy())
-    {
-        i2c1Status.busy = 1;
-        i2c1Status.address = address;
-        i2c1Status.switchToRead = 0;
-        i2c1Status.writePtr = data;
-        i2c1Status.writeLength = dataLength;
-        i2c1Status.readPtr = ((void*)0);
-        i2c1Status.readLength = 0;
-        i2c1Status.errorState = I2C_ERROR_NONE;
-        I2C1_WriteStart();
-        retStatus = 1;
-    }
-    return retStatus;
-}
-
-_Bool I2C1_Read(uint16_t address, uint8_t *data, size_t dataLength)
-{
-    _Bool retStatus = 0;
-    if (!I2C1_IsBusy())
-    {
-        i2c1Status.busy = 1;
-        i2c1Status.address = address;
-        i2c1Status.switchToRead = 0;
-        i2c1Status.readPtr = data;
-        i2c1Status.readLength = dataLength;
-        i2c1Status.writePtr = ((void*)0);
-        i2c1Status.writeLength = 0;
-        i2c1Status.errorState = I2C_ERROR_NONE;
-        I2C1_ReadStart();
-        retStatus = 1;
-    }
-    return retStatus;
-}
-
-_Bool I2C1_WriteRead(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength)
-{
-    _Bool retStatus = 0;
-    if (!I2C1_IsBusy())
-    {
-        i2c1Status.busy = 1;
-        i2c1Status.address = address;
-        i2c1Status.switchToRead = 1;
-        i2c1Status.writePtr = writeData;
-        i2c1Status.writeLength = writeLength;
-        i2c1Status.readPtr = readData;
-        i2c1Status.readLength = readLength;
-        i2c1Status.errorState = I2C_ERROR_NONE;
-        I2C1_WriteStart();
-        retStatus = 1;
-    }
-    return retStatus;
-}
-
-i2c_host_error_t I2C1_ErrorGet(void)
-{
-    i2c_host_error_t retErrorState = i2c1Status.errorState;
-    i2c1Status.errorState = I2C_ERROR_NONE;
-    return retErrorState;
-}
-
-_Bool I2C1_IsBusy(void)
-{
-    return i2c1Status.busy || SSP1STATbits.S;
-}
-
-void I2C1_CallbackRegister(void (*callbackHandler)(void))
-{
-    if (callbackHandler != ((void*)0))
-    {
-        I2C1_Callback = callbackHandler;
-    }
-}
-
-void I2C1_Tasks(void)
-{
-    if (0U != PIR3bits.BCL1IF)
-    {
-        I2C1_ErrorEventHandler();
-    }
-    if (0U != PIR3bits.SSP1IF)
-    {
-        if (0U != PIR3bits.BCL1IF)
-        {
-            I2C1_ErrorEventHandler();
-        }
-        else
-        {
-            I2C1_EventHandler();
-        }
-    }
-}
-
-
-
-
-static void I2C1_ReadStart(void)
-{
-    I2C1_StartSend();
-    i2c1Status.state = I2C_STATE_SEND_RD_ADDR;
-}
-
-static void I2C1_WriteStart(void)
-{
-    I2C1_StartSend();
-    i2c1Status.state = I2C_STATE_SEND_WR_ADDR;
-}
-
-static void I2C1_Close(void)
-{
-    i2c1Status.busy = 0;
-    i2c1Status.address = 0xFF;
-    i2c1Status.writePtr = ((void*)0);
-    i2c1Status.readPtr = ((void*)0);
-    i2c1Status.state = I2C_STATE_IDLE;
-    I2C1_InterruptClear();
-    I2C1_ErrorInterruptClear();
-    I2C1_StatusFlagsClear();
-}
-
-static void I2C1_EventHandler(void)
-{
-    I2C1_InterruptClear();
-    if (0U != SSP1STATbits.P)
-    {
-        I2C1_Close();
-    }
-    else
-    {
-        if (I2C1_IsAddr() && I2C1_IsNack())
-        {
-            i2c1Status.state = I2C_STATE_NACK;
-            i2c1Status.errorState = I2C_ERROR_ADDR_NACK;
-        }
-        else if (I2C1_IsData() && I2C1_IsNack())
-        {
-            i2c1Status.state = I2C_STATE_NACK;
-            i2c1Status.errorState = I2C_ERROR_DATA_NACK;
-        }
-        else
-        {
-            ;
-        }
-    }
-
-    i2c1Status.state = i2c1_eventTable[i2c1Status.state]();
-}
-
-static void I2C1_ErrorEventHandler(void)
-{
-    i2c1Status.state = I2C_STATE_ERROR;
-    i2c1Status.errorState = I2C_ERROR_BUS_COLLISION;
-    I2C1_ErrorInterruptClear();
-    i2c1Status.state = i2c1_eventTable[i2c1Status.state]();
-    I2C1_Callback();
-}
-
-
-static i2c_host_event_states_t I2C1_EVENT_IDLE(void)
-{
-    i2c1Status.busy = 0;
-    return I2C_STATE_RESET;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_SEND_RD_ADDR(void)
-{
-    I2C1_DataTransmit((uint8_t) ((i2c1Status.address << 1) | 1U));
-    return I2C_STATE_RX;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_SEND_WR_ADDR(void)
-{
-    I2C1_DataTransmit((uint8_t) (i2c1Status.address << 1));
-    return I2C_STATE_TX;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_TX(void)
-{
-    i2c_host_event_states_t retEventState = I2C_STATE_TX;
-    if (0U != i2c1Status.writeLength)
-    {
-        i2c1Status.writeLength--;
-        I2C1_DataTransmit(*i2c1Status.writePtr);
-        i2c1Status.writePtr++;
-        retEventState = I2C_STATE_TX;
-    }
-    else
-    {
-        if (i2c1Status.switchToRead)
-        {
-            i2c1Status.switchToRead = 0;
-            I2C1_RestartEnable();
-            retEventState = I2C_STATE_SEND_RD_ADDR;
-        }
-        else
-        {
-            retEventState = I2C1_EVENT_STOP();
-        }
-    }
-
-    return retEventState;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_RX(void)
-{
-    i2c_host_event_states_t retEventState = I2C_STATE_RX;
-
-    if (I2C1_IsRxBufFull())
-    {
-        if (i2c1Status.readLength > 0U)
-        {
-            *i2c1Status.readPtr = I2C1_DataReceive();
-            i2c1Status.readPtr++;
-            i2c1Status.readLength--;
-
-        }
-
-        if (i2c1Status.readLength > 0U)
-        {
-            I2C1_AckSend();
-        }
-        else
-        {
-            I2C1_RestartDisable();
-            I2C1_NackSend();
-            retEventState = I2C_STATE_STOP;
-        }
-
-    }
-    else
-    {
-        I2C1_ReceiveEnable();
-    }
-    return retEventState;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_NACK(void)
-{
-    i2c_host_event_states_t retEventState = I2C_STATE_NACK;
-    retEventState = I2C1_EVENT_STOP();
-    return retEventState;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_ERROR(void)
-{
-    i2c_host_event_states_t retEventState = I2C_STATE_ERROR;
-    retEventState = I2C1_EVENT_RESET();
-    return retEventState;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_STOP(void)
-{
-    I2C1_StopSend();
-    I2C1_Close();
-    return I2C_STATE_IDLE;
-}
-
-static i2c_host_event_states_t I2C1_EVENT_RESET(void)
-{
-    I2C1_BusReset();
-    i2c1Status.busy = 0;
-    return I2C_STATE_IDLE;
+    I2C_SDAhigh();
 }
 
 
 
-
-static uint8_t I2C1_DataReceive(void)
+void I2C_SDAhigh(void)
 {
-    return SSP1BUF;
-}
-
-static void I2C1_DataTransmit(uint8_t data)
-{
-    SSP1BUF = data;
-}
-
-static __attribute__((inline)) void I2C1_BusReset(void)
-{
-    SSP1CON1bits.SSPEN = 0;
-    SSP1CON1bits.SSPEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_ReceiveEnable(void)
-{
-    SSP1CON2bits.RCEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_RestartEnable(void)
-{
-    SSP1CON2bits.RSEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_RestartDisable(void)
-{
-    SSP1CON2bits.RSEN = 0;
-}
-
-static __attribute__((inline)) void I2C1_StartSend(void)
-{
-    SSP1CON2bits.SEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_StopSend(void)
-{
-    SSP1CON2bits.PEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_AckSend(void)
-{
-    SSP1CON2bits.ACKDT = 0;
-    SSP1CON2bits.ACKEN = 1;
-}
-
-static __attribute__((inline)) void I2C1_NackSend(void)
-{
-    SSP1CON2bits.ACKDT = 1;
-    SSP1CON2bits.ACKEN = 1;
-}
-
-static _Bool I2C1_IsNack(void)
-{
-    return SSP1CON2bits.ACKSTAT;
-}
-
-static _Bool I2C1_IsData(void)
-{
-    return (SSP1STATbits.D_nA);
-}
-
-static _Bool I2C1_IsAddr(void)
-{
-    return !(SSP1STATbits.D_nA);
-}
-
-static _Bool I2C1_IsRxBufFull(void)
-{
-    return SSP1STATbits.BF;
-}
-
-static __attribute__((inline)) void I2C1_InterruptClear(void)
-{
-    PIR3bits.SSP1IF = 0;
-}
-
-static __attribute__((inline)) void I2C1_ErrorInterruptClear(void)
-{
-    PIR3bits.BCL1IF = 0;
-}
-
-static __attribute__((inline)) void I2C1_StatusFlagsClear(void)
-{
-    SSP1CON1bits.WCOL = 0;
-    SSP1CON1bits.SSPOV = 0;
+    TRISC = TRISC | 0b00000010;
 }

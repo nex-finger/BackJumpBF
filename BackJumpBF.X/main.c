@@ -33,18 +33,7 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
-
-void MCP23017_WriteReg(uint8_t reg, uint8_t data)
-{
-    uint8_t buf[2];
-    buf[0] = reg;  // レジスタアドレス
-    buf[1] = data; // 書き込みデータ
-
-    I2C1_Write(0x27, buf, 2); // 0x27 = アドレス(111)
-
-    while (I2C1_IsBusy())
-        ; // 完了待ち
-}
+#include "i2c.h"
 
 /*
     Main application
@@ -69,23 +58,11 @@ int main(void)
     // Disable the Peripheral Interrupts
     // INTERRUPT_PeripheralInterruptDisable();
 
-    MCP23017_WriteReg(0x00, 0x00);
+    I2C_Init();
+
     while (1)
     {
-        MCP23017_WriteReg(0x12, 0x01);
         __delay_ms(1000);
-
-        if (I2C1_ErrorGet() == I2C_ERROR_NONE)
-        {
-            IO_RC0_Toggle();
-        }
-
-        MCP23017_WriteReg(0x12, 0x01);
-        __delay_ms(1000);
-
-        if (I2C1_ErrorGet() != I2C_ERROR_NONE)
-        {
-            IO_RC0_Toggle();
-        }
+        IO_RC0_Toggle();
     }
 }

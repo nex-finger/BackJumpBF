@@ -1,25 +1,26 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"117 ./mcc_generated_files/system/../i2c_host/mssp1.h
-[; ;./mcc_generated_files/system/../i2c_host/mssp1.h: 117: _Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength);
-[v _I2C1_Write `(a ~T0 @X0 0 ef3`us`*uc`ui ]
-"205
-[; ;./mcc_generated_files/system/../i2c_host/mssp1.h: 205: _Bool I2C1_IsBusy(void);
-[v _I2C1_IsBusy `(a ~T0 @X0 0 ef ]
 [p mainexit ]
-"56 ./mcc_generated_files/system/system.h
-[; ;./mcc_generated_files/system/system.h: 56: void SYSTEM_Initialize(void);
+"55 ./mcc_generated_files/system/system.h
+[; ;./mcc_generated_files/system/system.h: 55: void SYSTEM_Initialize(void);
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
+"363 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 363:     struct {
+[s S31 :1 `uc 1 :5 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S31 . INTEDG . PEIE GIE ]
+"362
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 362: typedef union {
+[u S30 `S31 1 ]
+[n S30 . . ]
+"370
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 370: extern volatile INTCONbits_t INTCONbits __attribute__((address(0x00B)));
+[v _INTCONbits `VS30 ~T0 @X0 0 e@11 ]
+"6 ./i2c.h
+[; ;./i2c.h: 6: void I2C_Init(void);
+[v _I2C_Init `(v ~T0 @X0 0 ef ]
 [v F202 `(v ~T0 @X0 1 tf1`ul ]
 "20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
 [v __delay `JF202 ~T0 @X0 0 e ]
 [p i __delay ]
-"76 main.c
-[; ;main.c: 76:         if (I2C1_ErrorGet() == I2C_ERROR_NONE)
-[c E12613 0 1 2 3 .. ]
-[n E12613 . I2C_ERROR_NONE I2C_ERROR_ADDR_NACK I2C_ERROR_DATA_NACK I2C_ERROR_BUS_COLLISION  ]
-"194 ./mcc_generated_files/system/../i2c_host/mssp1.h
-[; ;./mcc_generated_files/system/../i2c_host/mssp1.h: 194: i2c_host_error_t I2C1_ErrorGet(void);
-[v _I2C1_ErrorGet `(E12613 ~T0 @X0 0 ef ]
 "1086 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 1086:     struct {
 [s S57 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -1666,108 +1667,50 @@ Version 4.0 HI-TECH Software Intermediate Code
 "36289
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 36289: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-"37 main.c
-[; ;main.c: 37: void MCP23017_WriteReg(uint8_t reg, uint8_t data)
-[v _MCP23017_WriteReg `(v ~T0 @X0 1 ef2`uc`uc ]
-"38
-[; ;main.c: 38: {
-{
-[e :U _MCP23017_WriteReg ]
-"37
-[; ;main.c: 37: void MCP23017_WriteReg(uint8_t reg, uint8_t data)
-[v _reg `uc ~T0 @X0 1 r1 ]
-[v _data `uc ~T0 @X0 1 r2 ]
-"38
-[; ;main.c: 38: {
-[f ]
-"39
-[; ;main.c: 39:     uint8_t buf[2];
-[v _buf `uc ~T0 @X0 -> 2 `i a ]
-"40
-[; ;main.c: 40:     buf[0] = reg;
-[e = *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux _reg ]
-"41
-[; ;main.c: 41:     buf[1] = data;
-[e = *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux _data ]
-"43
-[; ;main.c: 43:     I2C1_Write(0x27, buf, 2);
-[e ( _I2C1_Write (3 , , -> -> 39 `i `us &U _buf -> -> 2 `i `ui ]
-"45
-[; ;main.c: 45:     while (I2C1_IsBusy());
-[e $U 1620  ]
-[e :U 1621 ]
-[e :U 1620 ]
-[e $ != -> ( _I2C1_IsBusy ..  `i -> 0 `i 1621  ]
-[e :U 1622 ]
-"46
-[; ;main.c: 46: }
-[e :UE 1619 ]
-}
 [v $root$_main `(v ~T0 @X0 0 e ]
-"52
-[; ;main.c: 52: int main(void)
+"42 main.c
+[; ;main.c: 42: int main(void)
 [v _main `(i ~T0 @X0 1 ef ]
-"53
-[; ;main.c: 53: {
+"43
+[; ;main.c: 43: {
 {
 [e :U _main ]
 [f ]
-"54
-[; ;main.c: 54:     SYSTEM_Initialize();
+"44
+[; ;main.c: 44:     SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"71
-[; ;main.c: 71:     while (1)
-[e :U 1625 ]
-"72
-[; ;main.c: 72:     {
+"50
+[; ;main.c: 50:     (INTCONbits.GIE = 1);
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+"56
+[; ;main.c: 56:     (INTCONbits.PEIE = 1);
+[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
+"61
+[; ;main.c: 61:     I2C_Init();
+[e ( _I2C_Init ..  ]
+"63
+[; ;main.c: 63:     while (1)
+[e :U 1618 ]
+"64
+[; ;main.c: 64:     {
 {
-"74
-[; ;main.c: 74:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
+"65
+[; ;main.c: 65:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `ul `d .4000.0 `ul ]
-"76
-[; ;main.c: 76:         if (I2C1_ErrorGet() == I2C_ERROR_NONE)
-[e $ ! == -> ( _I2C1_ErrorGet ..  `ui -> . `E12613 0 `ui 1627  ]
-"77
-[; ;main.c: 77:         {
-{
-"78
-[; ;main.c: 78:             do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
-[e :U 1630 ]
+"66
+[; ;main.c: 66:         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
+[e :U 1622 ]
 {
 [e = . . _LATCbits 0 0 -> ~ -> . . _LATCbits 0 0 `i `uc ]
 }
-[e :U 1629 ]
-"79
-[; ;main.c: 79:         }
+[e :U 1621 ]
+"67
+[; ;main.c: 67:     }
 }
-[e :U 1627 ]
-"82
-[; ;main.c: 82:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `ul `d .4000.0 `ul ]
-"84
-[; ;main.c: 84:         if (I2C1_ErrorGet() != I2C_ERROR_NONE)
-[e $ ! != -> ( _I2C1_ErrorGet ..  `ui -> . `E12613 0 `ui 1631  ]
-"85
-[; ;main.c: 85:         {
-{
-"86
-[; ;main.c: 86:             do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
-[e :U 1634 ]
-{
-[e = . . _LATCbits 0 0 -> ~ -> . . _LATCbits 0 0 `i `uc ]
-}
-[e :U 1633 ]
-"87
-[; ;main.c: 87:         }
-}
-[e :U 1631 ]
-"88
-[; ;main.c: 88:     }
-}
-[e :U 1624 ]
-[e $U 1625  ]
-[e :U 1626 ]
-"89
-[; ;main.c: 89: }
-[e :UE 1623 ]
+[e :U 1617 ]
+[e $U 1618  ]
+[e :U 1619 ]
+"68
+[; ;main.c: 68: }
+[e :UE 1616 ]
 }

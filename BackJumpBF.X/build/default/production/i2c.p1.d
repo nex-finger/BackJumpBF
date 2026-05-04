@@ -1,5 +1,5 @@
-build/default/production/main.p1:  \
-main.c  \
+build/default/production/i2c.p1:  \
+i2c.c  \
 mcc_generated_files/system/system.h  \
 mcc_generated_files/system/config_bits.h  \
 mcc_generated_files/system/../system/clock.h  \

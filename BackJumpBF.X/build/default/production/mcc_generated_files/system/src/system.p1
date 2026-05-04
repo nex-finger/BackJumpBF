@@ -8,9 +8,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "119 mcc_generated_files/system/src/../../uart/eusart.h
 [; ;mcc_generated_files/system/src/../../uart/eusart.h: 119: void EUSART_Initialize(void);
 [v _EUSART_Initialize `(v ~T0 @X0 0 ef ]
-"78 mcc_generated_files/system/src/../../i2c_host/mssp1.h
-[; ;mcc_generated_files/system/src/../../i2c_host/mssp1.h: 78: void I2C1_Initialize(void);
-[v _I2C1_Initialize `(v ~T0 @X0 0 ef ]
 "85 mcc_generated_files/system/src/../../system/interrupt.h
 [; ;mcc_generated_files/system/src/../../system/interrupt.h: 85: void INTERRUPT_Initialize (void);
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
@@ -1649,30 +1646,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 "36289
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 36289: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-"38 mcc_generated_files/system/src/system.c
-[; ;mcc_generated_files/system/src/system.c: 38: void SYSTEM_Initialize(void)
+"39 mcc_generated_files/system/src/system.c
+[; ;mcc_generated_files/system/src/system.c: 39: void SYSTEM_Initialize(void)
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
-"39
-[; ;mcc_generated_files/system/src/system.c: 39: {
+"40
+[; ;mcc_generated_files/system/src/system.c: 40: {
 {
 [e :U _SYSTEM_Initialize ]
 [f ]
-"40
-[; ;mcc_generated_files/system/src/system.c: 40:     CLOCK_Initialize();
-[e ( _CLOCK_Initialize ..  ]
 "41
-[; ;mcc_generated_files/system/src/system.c: 41:     PIN_MANAGER_Initialize();
-[e ( _PIN_MANAGER_Initialize ..  ]
+[; ;mcc_generated_files/system/src/system.c: 41:     CLOCK_Initialize();
+[e ( _CLOCK_Initialize ..  ]
 "42
-[; ;mcc_generated_files/system/src/system.c: 42:     EUSART_Initialize();
-[e ( _EUSART_Initialize ..  ]
+[; ;mcc_generated_files/system/src/system.c: 42:     PIN_MANAGER_Initialize();
+[e ( _PIN_MANAGER_Initialize ..  ]
 "43
-[; ;mcc_generated_files/system/src/system.c: 43:     I2C1_Initialize();
-[e ( _I2C1_Initialize ..  ]
+[; ;mcc_generated_files/system/src/system.c: 43:     EUSART_Initialize();
+[e ( _EUSART_Initialize ..  ]
 "44
 [; ;mcc_generated_files/system/src/system.c: 44:     INTERRUPT_Initialize();
 [e ( _INTERRUPT_Initialize ..  ]
 "45
 [; ;mcc_generated_files/system/src/system.c: 45: }
-[e :UE 1619 ]
+[e :UE 1616 ]
 }

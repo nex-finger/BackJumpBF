@@ -20760,7 +20760,7 @@ void PIN_MANAGER_Initialize(void)
 
     LATA = 0x0;
     LATB = 0x0;
-    LATC = 0x18;
+    LATC = 0x0;
     LATD = 0x0;
     LATE = 0x0;
 
@@ -20778,8 +20778,8 @@ void PIN_MANAGER_Initialize(void)
 
     ANSELA = 0xFF;
     ANSELB = 0xFF;
-    ANSELC = 0x0;
-    ANSELD = 0xFC;
+    ANSELC = 0x18;
+    ANSELD = 0xF0;
     ANSELE = 0x7;
 
 
@@ -20806,7 +20806,7 @@ void PIN_MANAGER_Initialize(void)
     SLRCONA = 0xFF;
     SLRCONB = 0xFF;
     SLRCONC = 0xFF;
-    SLRCOND = 0xFF;
+    SLRCOND = 0xF3;
     SLRCONE = 0x7;
 
 
@@ -20814,7 +20814,7 @@ void PIN_MANAGER_Initialize(void)
     INLVLA = 0xFF;
     INLVLB = 0xFF;
     INLVLC = 0xFF;
-    INLVLD = 0xFF;
+    INLVLD = 0xF3;
     INLVLE = 0xF;
 
 
@@ -20822,11 +20822,7 @@ void PIN_MANAGER_Initialize(void)
 
     RXPPS = 0x17;
     RC6PPS = 0x10;
-    SSP1CLKPPS = 0x13;
-    RC3PPS = 0x14;
-    SSP1DATPPS = 0x14;
-    RC4PPS = 0x15;
-# 120 "mcc_generated_files/system/src/pins.c"
+# 116 "mcc_generated_files/system/src/pins.c"
     IOCAP = 0x0;
     IOCAN = 0x0;
     IOCAF = 0x0;
