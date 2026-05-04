@@ -43,7 +43,7 @@ void PIN_MANAGER_Initialize(void)
     */
     LATA = 0x0;
     LATB = 0x0;
-    LATC = 0x18;
+    LATC = 0x0;
     LATD = 0x0;
     LATE = 0x0;
 
@@ -88,7 +88,7 @@ void PIN_MANAGER_Initialize(void)
     */
     SLRCONA = 0xFF;
     SLRCONB = 0xFF;
-    SLRCONC = 0xFF;
+    SLRCONC = 0xE7;
     SLRCOND = 0xFF;
     SLRCONE = 0x7;
     /**
@@ -96,7 +96,7 @@ void PIN_MANAGER_Initialize(void)
     */
     INLVLA = 0xFF;
     INLVLB = 0xFF;
-    INLVLC = 0xFF;
+    INLVLC = 0xE7;
     INLVLD = 0xFF;
     INLVLE = 0xF;
 

@@ -60,6 +60,7 @@
 #define I2C1_Host_CallbackRegister I2C1_CallbackRegister
 #define I2C1_Host_IsBusy I2C1_IsBusy
 
+#define I2C1_Host_Tasks I2C1_Tasks
 
 /**
  * @ingroup i2c_host
@@ -233,19 +234,10 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 /**
  * @ingroup i2c_host
- * @brief Interrupt Service Routine (ISR) for I2C1 common interrupts.
+ * @brief Polling function for Non-Interrupt mode.
  * @param None.
  * @return None.
  */
-void I2C1_ISR(void);
-
-/**
- * @ingroup i2c_host
- * @brief ISR function for I2C1 error interrupts.
- * @param None.
- * @return None.
- */
-void I2C1_ERROR_ISR(void);
-
+void I2C1_Tasks(void);
  
 #endif //MSSP1_H

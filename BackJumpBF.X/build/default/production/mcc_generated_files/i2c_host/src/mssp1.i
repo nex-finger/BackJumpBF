@@ -20804,23 +20804,23 @@ typedef struct
     void (*Tasks)(void);
 }i2c_host_interface_t;
 # 47 "mcc_generated_files/i2c_host/src/../mssp1.h" 2
-# 68 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 69 "mcc_generated_files/i2c_host/src/../mssp1.h"
 extern const i2c_host_interface_t I2C1_Host;
-# 77 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 78 "mcc_generated_files/i2c_host/src/../mssp1.h"
 void I2C1_Initialize(void);
-# 86 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 87 "mcc_generated_files/i2c_host/src/../mssp1.h"
 void I2C1_Deinitialize(void);
-# 117 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 118 "mcc_generated_files/i2c_host/src/../mssp1.h"
 _Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength);
-# 148 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 149 "mcc_generated_files/i2c_host/src/../mssp1.h"
 _Bool I2C1_Read(uint16_t address, uint8_t *data, size_t dataLength);
-# 183 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 184 "mcc_generated_files/i2c_host/src/../mssp1.h"
 _Bool I2C1_WriteRead(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-# 194 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 195 "mcc_generated_files/i2c_host/src/../mssp1.h"
 i2c_host_error_t I2C1_ErrorGet(void);
-# 205 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 206 "mcc_generated_files/i2c_host/src/../mssp1.h"
 _Bool I2C1_IsBusy(void);
-# 232 "mcc_generated_files/i2c_host/src/../mssp1.h"
+# 233 "mcc_generated_files/i2c_host/src/../mssp1.h"
 void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 
@@ -20829,15 +20829,7 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 
 
-void I2C1_ISR(void);
-
-
-
-
-
-
-
-void I2C1_ERROR_ISR(void);
+void I2C1_Tasks(void);
 # 38 "mcc_generated_files/i2c_host/src/mssp1.c" 2
 
 
@@ -20862,8 +20854,6 @@ static _Bool I2C1_IsNack(void);
 static _Bool I2C1_IsData(void);
 static _Bool I2C1_IsAddr(void);
 static _Bool I2C1_IsRxBufFull(void);
-static __attribute__((inline)) void I2C1_InterruptsEnable(void);
-static __attribute__((inline)) void I2C1_InterruptsDisable(void);
 static __attribute__((inline)) void I2C1_InterruptClear(void);
 static __attribute__((inline)) void I2C1_ErrorInterruptClear(void);
 static __attribute__((inline)) void I2C1_StatusFlagsClear(void);
@@ -20891,7 +20881,7 @@ const i2c_host_interface_t I2C1_Host = {
     .ErrorGet = I2C1_ErrorGet,
     .IsBusy = I2C1_IsBusy,
     .CallbackRegister = I2C1_CallbackRegister,
-    .Tasks = ((void*)0)
+    .Tasks = I2C1_Tasks
 };
 
 
@@ -20926,8 +20916,7 @@ void I2C1_Initialize(void)
 
     SSP1CON3 = 0x0;
 
-    SSP1ADD = 0x13;
-    I2C1_InterruptsEnable();
+    SSP1ADD = 0x4F;
     SSP1CON1bits.SSPEN = 1;
 }
 
@@ -20938,7 +20927,6 @@ void I2C1_Deinitialize(void)
     SSP1CON2 = 0x00;
     SSP1CON3 = 0x00;
     SSP1ADD = 0x00;
-    I2C1_InterruptsDisable();
 }
 
 _Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength)
@@ -21018,14 +21006,23 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void))
     }
 }
 
-void I2C1_ISR(void)
+void I2C1_Tasks(void)
 {
-    I2C1_EventHandler();
-}
-
-void I2C1_ERROR_ISR(void)
-{
-    I2C1_ErrorEventHandler();
+    if (0U != PIR3bits.BCL1IF)
+    {
+        I2C1_ErrorEventHandler();
+    }
+    if (0U != PIR3bits.SSP1IF)
+    {
+        if (0U != PIR3bits.BCL1IF)
+        {
+            I2C1_ErrorEventHandler();
+        }
+        else
+        {
+            I2C1_EventHandler();
+        }
+    }
 }
 
 
@@ -21273,18 +21270,6 @@ static _Bool I2C1_IsAddr(void)
 static _Bool I2C1_IsRxBufFull(void)
 {
     return SSP1STATbits.BF;
-}
-
-static __attribute__((inline)) void I2C1_InterruptsEnable(void)
-{
-    PIE3bits.SSP1IE = 1;
-    PIE3bits.BCL1IE = 1;
-}
-
-static __attribute__((inline)) void I2C1_InterruptsDisable(void)
-{
-    PIE3bits.SSP1IE = 0;
-    PIE3bits.BCL1IE = 0;
 }
 
 static __attribute__((inline)) void I2C1_InterruptClear(void)

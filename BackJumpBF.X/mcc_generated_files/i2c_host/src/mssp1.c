@@ -58,8 +58,6 @@ static bool I2C1_IsNack(void);
 static bool I2C1_IsData(void);
 static bool I2C1_IsAddr(void);
 static bool I2C1_IsRxBufFull(void);
-static inline void I2C1_InterruptsEnable(void);
-static inline void I2C1_InterruptsDisable(void);
 static inline void I2C1_InterruptClear(void);
 static inline void I2C1_ErrorInterruptClear(void);
 static inline void I2C1_StatusFlagsClear(void);
@@ -87,7 +85,7 @@ const i2c_host_interface_t I2C1_Host = {
     .ErrorGet = I2C1_ErrorGet,
     .IsBusy = I2C1_IsBusy,
     .CallbackRegister = I2C1_CallbackRegister,
-    .Tasks = NULL
+    .Tasks = I2C1_Tasks
 };
 
 /*
@@ -121,9 +119,8 @@ void I2C1_Initialize(void)
     SSP1CON2 = 0x0;
     /* DHEN disabled; AHEN disabled; SBCDE disabled; SDAHT 100ns; BOEN disabled; SCIE disabled; PCIE disabled;  */
     SSP1CON3 = 0x0;
-    /* SSPADD 19;  */
-    SSP1ADD = 0x13;
-    I2C1_InterruptsEnable();
+    /* SSPADD 79;  */
+    SSP1ADD = 0x4F;
     SSP1CON1bits.SSPEN = 1;
 }
 
@@ -134,7 +131,6 @@ void I2C1_Deinitialize(void)
     SSP1CON2 = 0x00;
     SSP1CON3 = 0x00;
     SSP1ADD = 0x00;
-    I2C1_InterruptsDisable();
 }
 
 bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength)
@@ -214,14 +210,23 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void))
     }
 }
 
-void I2C1_ISR(void)
+void I2C1_Tasks(void)
 {
-    I2C1_EventHandler();
-}
-
-void I2C1_ERROR_ISR(void)
-{
-    I2C1_ErrorEventHandler();
+    if (0U != PIR3bits.BCL1IF)
+    {
+        I2C1_ErrorEventHandler();
+    }
+    if (0U != PIR3bits.SSP1IF)
+    {
+        if (0U != PIR3bits.BCL1IF)
+        {
+            I2C1_ErrorEventHandler();
+        }
+        else
+        {
+            I2C1_EventHandler();
+        }
+    }
 }
 
 /*
@@ -469,18 +474,6 @@ static bool I2C1_IsAddr(void)
 static bool I2C1_IsRxBufFull(void)
 {
     return SSP1STATbits.BF;
-}
-
-static inline void I2C1_InterruptsEnable(void)
-{
-    PIE3bits.SSP1IE = 1;
-    PIE3bits.BCL1IE = 1;
-}
-
-static inline void I2C1_InterruptsDisable(void)
-{
-    PIE3bits.SSP1IE = 0;
-    PIE3bits.BCL1IE = 0;
 }
 
 static inline void I2C1_InterruptClear(void)

@@ -1892,8 +1892,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/system/src/pins.c: 72:     WPUB = 0x0;
 [e = _WPUB -> -> 0 `i `uc ]
 "73
-[; ;mcc_generated_files/system/src/pins.c: 73:     WPUC = 0x0;
-[e = _WPUC -> -> 0 `i `uc ]
+[; ;mcc_generated_files/system/src/pins.c: 73:     WPUC = 0x18;
+[e = _WPUC -> -> 24 `i `uc ]
 "74
 [; ;mcc_generated_files/system/src/pins.c: 74:     WPUD = 0x0;
 [e = _WPUD -> -> 0 `i `uc ]
@@ -1907,8 +1907,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/system/src/pins.c: 82:     ODCONB = 0x0;
 [e = _ODCONB -> -> 0 `i `uc ]
 "83
-[; ;mcc_generated_files/system/src/pins.c: 83:     ODCONC = 0x0;
-[e = _ODCONC -> -> 0 `i `uc ]
+[; ;mcc_generated_files/system/src/pins.c: 83:     ODCONC = 0x18;
+[e = _ODCONC -> -> 24 `i `uc ]
 "84
 [; ;mcc_generated_files/system/src/pins.c: 84:     ODCOND = 0x0;
 [e = _ODCOND -> -> 0 `i `uc ]

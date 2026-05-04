@@ -20787,7 +20787,7 @@ void PIN_MANAGER_Initialize(void)
 
     WPUA = 0x0;
     WPUB = 0x0;
-    WPUC = 0x0;
+    WPUC = 0x18;
     WPUD = 0x0;
     WPUE = 0x0;
 
@@ -20797,7 +20797,7 @@ void PIN_MANAGER_Initialize(void)
 
     ODCONA = 0x0;
     ODCONB = 0x0;
-    ODCONC = 0x0;
+    ODCONC = 0x18;
     ODCOND = 0x0;
     ODCONE = 0x0;
 

@@ -21242,6 +21242,17 @@ void INT_DefaultInterruptHandler(void);
 void SYSTEM_Initialize(void);
 # 36 "main.c" 2
 
+void MCP23017_WriteReg(uint8_t reg, uint8_t data)
+{
+    uint8_t buf[2];
+    buf[0] = reg;
+    buf[1] = data;
+
+    I2C1_Write(0x27, buf, 2);
+
+    while (I2C1_IsBusy());
+}
+
 
 
 
@@ -21249,10 +21260,23 @@ void SYSTEM_Initialize(void);
 int main(void)
 {
     SYSTEM_Initialize();
-# 61 "main.c"
-    while(1)
+# 71 "main.c"
+    while (1)
     {
-        do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
-        _delay((unsigned long)((2000)*(32000000U/4000.0)));
+
+        _delay((unsigned long)((1000)*(32000000U/4000.0)));
+
+        if (I2C1_ErrorGet() == I2C_ERROR_NONE)
+        {
+            do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
+        }
+
+
+        _delay((unsigned long)((1000)*(32000000U/4000.0)));
+
+        if (I2C1_ErrorGet() != I2C_ERROR_NONE)
+        {
+            do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
+        }
     }
 }

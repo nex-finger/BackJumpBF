@@ -21203,23 +21203,23 @@ typedef struct
     void (*Tasks)(void);
 }i2c_host_interface_t;
 # 47 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h" 2
-# 68 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 69 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 extern const i2c_host_interface_t I2C1_Host;
-# 77 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 78 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 void I2C1_Initialize(void);
-# 86 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 87 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 void I2C1_Deinitialize(void);
-# 117 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 118 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 _Bool I2C1_Write(uint16_t address, uint8_t *data, size_t dataLength);
-# 148 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 149 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 _Bool I2C1_Read(uint16_t address, uint8_t *data, size_t dataLength);
-# 183 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 184 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 _Bool I2C1_WriteRead(uint16_t address, uint8_t *writeData, size_t writeLength, uint8_t *readData, size_t readLength);
-# 194 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 195 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 i2c_host_error_t I2C1_ErrorGet(void);
-# 205 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 206 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 _Bool I2C1_IsBusy(void);
-# 232 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
+# 233 "mcc_generated_files/system/src/../../system/../i2c_host/mssp1.h"
 void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 
@@ -21228,15 +21228,7 @@ void I2C1_CallbackRegister(void (*callbackHandler)(void));
 
 
 
-void I2C1_ISR(void);
-
-
-
-
-
-
-
-void I2C1_ERROR_ISR(void);
+void I2C1_Tasks(void);
 # 46 "mcc_generated_files/system/src/../../system/system.h" 2
 # 56 "mcc_generated_files/system/src/../../system/system.h"
 void SYSTEM_Initialize(void);
@@ -21263,21 +21255,6 @@ void __attribute__((picinterrupt(("")))) INTERRUPT_InterruptManager (void)
     if(PIE0bits.IOCIE == 1 && PIR0bits.IOCIF == 1)
     {
         PIN_MANAGER_IOC();
-    }
-    else if(INTCONbits.PEIE == 1)
-    {
-        if(PIE3bits.BCL1IE == 1 && PIR3bits.BCL1IF == 1)
-        {
-            I2C1_ERROR_ISR();
-        }
-        else if(PIE3bits.SSP1IE == 1 && PIR3bits.SSP1IF == 1)
-        {
-            I2C1_ISR();
-        }
-        else
-        {
-
-        }
     }
     else
     {
