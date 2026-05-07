@@ -21,6 +21,14 @@
 [v _I2C_SDAhigh I2C_SDAhigh `(v  1 e 1 0 ]
 "43
 [v _I2C_SDAlow I2C_SDAlow `(v  1 e 1 0 ]
+"57
+[v _I2C_StartCondition I2C_StartCondition `(v  1 e 1 0 ]
+"93
+[v _I2C_StopCondition I2C_StopCondition `(v  1 e 1 0 ]
+"106
+[v _I2C_bitWrite I2C_bitWrite `(v  1 e 1 0 ]
+"129
+[v _I2C_bitRead I2C_bitRead `(uc  1 e 1 0 ]
 "42 D:\BackJumpBF\repo\BackJumpBF.X\main.c
 [v _main main `(i  1 e 2 0 ]
 "39 D:\BackJumpBF\repo\BackJumpBF.X\mcc_generated_files/system/src/clock.c
@@ -87,6 +95,18 @@
 "370 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
 [u S41 . 1 `S36 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES41  1 e 1 @11 ]
+[s S726 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"593
+[u S735 . 1 `S726 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES735  1 e 1 @15 ]
 "676
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "738
@@ -117,7 +137,7 @@
 [v _LATCbits LATCbits `VES664  1 e 1 @24 ]
 "1142
 [v _LATD LATD `VEuc  1 e 1 @25 ]
-[s S700 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S703 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -127,8 +147,8 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1159
-[u S709 . 1 `S700 1 . 1 0 ]
-[v _LATDbits LATDbits `VES709  1 e 1 @25 ]
+[u S712 . 1 `S703 1 . 1 0 ]
+[v _LATDbits LATDbits `VES712  1 e 1 @25 ]
 "1204
 [v _LATE LATE `VEuc  1 e 1 @26 ]
 "3764
@@ -379,10 +399,25 @@
 {
 "55
 } 0
-"43 D:\BackJumpBF\repo\BackJumpBF.X\i2c.c
+"93 D:\BackJumpBF\repo\BackJumpBF.X\i2c.c
+[v _I2C_StopCondition I2C_StopCondition `(v  1 e 1 0 ]
+{
+"101
+} 0
+"57
+[v _I2C_StartCondition I2C_StartCondition `(v  1 e 1 0 ]
+{
+"63
+} 0
+"43
 [v _I2C_SDAlow I2C_SDAlow `(v  1 e 1 0 ]
 {
 "47
+} 0
+"28
+[v _I2C_SCLlow I2C_SCLlow `(v  1 e 1 0 ]
+{
+"32
 } 0
 "13
 [v _I2C_Init I2C_Init `(v  1 e 1 0 ]

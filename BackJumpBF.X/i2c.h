@@ -20,9 +20,13 @@ void I2C_StartCondition(void);
 void I2C_RepeatedStartCondition(void);
 void I2C_StopCondition(void);
 
+/* ビット単位読み書き */
+void I2C_bitWrite(unsigned char in);
+unsigned char I2C_bitRead(void);
+
 /* バイト単位読み書き */
-void I2C_byteWrite(unsigned char in);
-unsigned char I2C_byteRead(void);
+unsigned char I2C_byteWrite(unsigned char inData);
+unsigned char I2C_byteRead(unsigned char inAck);
 
 /* 1バイト取得 */
 

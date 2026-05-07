@@ -21156,8 +21156,12 @@ void I2C_RepeatedStartCondition(void);
 void I2C_StopCondition(void);
 
 
-void I2C_byteWrite(unsigned char in);
-unsigned char I2C_byteRead(void);
+void I2C_bitWrite(unsigned char in);
+unsigned char I2C_bitRead(void);
+
+
+unsigned char I2C_byteWrite(unsigned char inData);
+unsigned char I2C_byteRead(unsigned char inAck);
 # 9 "i2c.c" 2
 
 
@@ -21227,4 +21231,75 @@ void I2C_StopCondition(void)
     I2C_SCLhigh();
     _delay((unsigned long)((6)*(32000000U/4000000.0)));
     I2C_SDAhigh();
+}
+
+
+
+
+void I2C_bitWrite(unsigned char in)
+{
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+
+
+    if (in == 0)
+    {
+        I2C_SDAlow();
+    }
+    else
+    {
+        I2C_SDAhigh();
+    }
+
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLhigh();
+    _delay((unsigned long)((6 * 2)*(32000000U/4000000.0)));
+    I2C_SDAlow();
+}
+
+
+
+
+unsigned char I2C_bitRead(void)
+{
+    unsigned char aRet;
+
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAhigh();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLhigh();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    PORTDbits.RD2;
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLlow();
+
+    return aRet;
+}
+
+
+
+
+
+unsigned char I2C_byteWrite(unsigned char inData)
+{
+
+    unsigned char aRet;
+    int i;
+
+
+    for (i = 0; i < 8; i++)
+    {
+        I2C_bitWrite(inData % 2);
+        inData /= 2;
+    }
+
+
+    aRet = I2C_bitRead();
+
+    return aRet;
+}
+
+unsigned char I2C_byteRead(unsigned char inAck)
+{
+    unsigned char aRet;
+    return aRet;
 }

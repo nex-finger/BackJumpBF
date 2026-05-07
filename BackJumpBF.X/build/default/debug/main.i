@@ -21151,8 +21151,12 @@ void I2C_RepeatedStartCondition(void);
 void I2C_StopCondition(void);
 
 
-void I2C_byteWrite(unsigned char in);
-unsigned char I2C_byteRead(void);
+void I2C_bitWrite(unsigned char in);
+unsigned char I2C_bitRead(void);
+
+
+unsigned char I2C_byteWrite(unsigned char inData);
+unsigned char I2C_byteRead(unsigned char inAck);
 # 37 "main.c" 2
 
 
@@ -21182,11 +21186,11 @@ int main(void)
 
     while (1)
     {
-        I2C_SDAlow();
+        I2C_StartCondition();
         _delay((unsigned long)((1000)*(32000000U/4000.0)));
         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
 
-        I2C_SDAhigh();
+        I2C_StopCondition();
         _delay((unsigned long)((1000)*(32000000U/4000.0)));
         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
     }

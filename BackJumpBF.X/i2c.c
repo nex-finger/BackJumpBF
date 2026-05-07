@@ -100,6 +100,77 @@ void I2C_StopCondition(void)
     I2C_SDAhigh();
 }
 
+/* ビット書き込み
+ * SCLはLow前提 → 必ずLowになる
+ * SDAは不定 → 不定になる */
+void I2C_bitWrite(unsigned char in)
+{
+    __delay_us(I2C_TICK);
+
+    /* 入力に応じSDAを操作する */
+    if (in == 0)
+    {
+        I2C_SDAlow();
+    }
+    else
+    {
+        I2C_SDAhigh();
+    }
+
+    __delay_us(I2C_TICK);
+    I2C_SCLhigh();
+    __delay_us(I2C_TICK * 2);
+    I2C_SDAlow();
+}
+
+/* ビット読み取り
+ * SCLはLow前提 → 必ずLowになる
+ * SDAは不定 → 不定になる */
+unsigned char I2C_bitRead(void)
+{
+    unsigned char aRet;
+
+    __delay_us(I2C_TICK);
+    I2C_SDAhigh(); /* 入力モードにしてクライアントからの入力を待つ */
+    __delay_us(I2C_TICK);
+    I2C_SCLhigh();
+    __delay_us(I2C_TICK);
+    IO_RD2_GetValue(); /* 入力ポートから取得 */
+    __delay_us(I2C_TICK);
+    I2C_SCLlow();
+
+    return aRet;
+}
+
+/* ホストからクライアントへの1バイト送信
+ * SCLはLow前提 → 必ずLowになる
+ * SDAは不定 → 不定になる
+ * aRet: Ack or Nack */
+unsigned char I2C_byteWrite(unsigned char inData)
+{
+    /* 戻り値はクライアントからのAck */
+    unsigned char aRet;
+    int i;
+
+    /* 8ビットのデータを送信 */
+    for (i = 0; i < 8; i++)
+    {
+        I2C_bitWrite(inData % 2);
+        inData /= 2;
+    }
+
+    /* 1ビットのAckを受信 */
+    aRet = I2C_bitRead();
+
+    return aRet;
+}
+
+unsigned char I2C_byteRead(unsigned char inAck)
+{
+    unsigned char aRet;
+    return aRet;
+}
+
 /* 1バイト書き込み
  * | host1| --- Start --> |client|
  * |     2| -- Opecode -> |      |
@@ -111,7 +182,7 @@ void I2C_StopCondition(void)
  * |     8| <--- Nack --- |      |
  * |     9| --- Stop ---> |      | */
 
-/* 1バイト読み込み
+/* 1バイト読み取り
  * | host1| --- Start --> |client|
  * |     2| -- Opecode -> |      |
  * |     3| --- Wbit ---> |      |

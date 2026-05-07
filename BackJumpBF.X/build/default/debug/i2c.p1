@@ -23,6 +23,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 "20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
 [v __delay `JF202 ~T0 @X0 0 e ]
 [p i __delay ]
+"582 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 582:     struct {
+[s S39 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S39 . RD0 RD1 RD2 RD3 RD4 RD5 RD6 RD7 ]
+"581
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 581: typedef union {
+[u S38 `S39 1 ]
+[n S38 . . ]
+"593
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 593: extern volatile PORTDbits_t PORTDbits __attribute__((address(0x00F)));
+[v _PORTDbits `VS38 ~T0 @X0 0 e@15 ]
 "54 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 54: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1839,4 +1850,182 @@ Version 4.0 HI-TECH Software Intermediate Code
 "101
 [; ;i2c.c: 101: }
 [e :UE 1629 ]
+}
+"106
+[; ;i2c.c: 106: void I2C_bitWrite(unsigned char in)
+[v _I2C_bitWrite `(v ~T0 @X0 1 ef1`uc ]
+"107
+[; ;i2c.c: 107: {
+{
+[e :U _I2C_bitWrite ]
+"106
+[; ;i2c.c: 106: void I2C_bitWrite(unsigned char in)
+[v _in `uc ~T0 @X0 1 r1 ]
+"107
+[; ;i2c.c: 107: {
+[f ]
+"108
+[; ;i2c.c: 108:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"111
+[; ;i2c.c: 111:     if (in == 0)
+[e $ ! == -> _in `i -> 0 `i 1631  ]
+"112
+[; ;i2c.c: 112:     {
+{
+"113
+[; ;i2c.c: 113:         I2C_SDAlow();
+[e ( _I2C_SDAlow ..  ]
+"114
+[; ;i2c.c: 114:     }
+}
+[e $U 1632  ]
+"115
+[; ;i2c.c: 115:     else
+[e :U 1631 ]
+"116
+[; ;i2c.c: 116:     {
+{
+"117
+[; ;i2c.c: 117:         I2C_SDAhigh();
+[e ( _I2C_SDAhigh ..  ]
+"118
+[; ;i2c.c: 118:     }
+}
+[e :U 1632 ]
+"120
+[; ;i2c.c: 120:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"121
+[; ;i2c.c: 121:     I2C_SCLhigh();
+[e ( _I2C_SCLhigh ..  ]
+"122
+[; ;i2c.c: 122:     _delay((unsigned long)((6 * 2)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> * -> 6 `i -> 2 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"123
+[; ;i2c.c: 123:     I2C_SDAlow();
+[e ( _I2C_SDAlow ..  ]
+"124
+[; ;i2c.c: 124: }
+[e :UE 1630 ]
+}
+"129
+[; ;i2c.c: 129: unsigned char I2C_bitRead(void)
+[v _I2C_bitRead `(uc ~T0 @X0 1 ef ]
+"130
+[; ;i2c.c: 130: {
+{
+[e :U _I2C_bitRead ]
+[f ]
+"131
+[; ;i2c.c: 131:     unsigned char aRet;
+[v _aRet `uc ~T0 @X0 1 a ]
+"133
+[; ;i2c.c: 133:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"134
+[; ;i2c.c: 134:     I2C_SDAhigh();
+[e ( _I2C_SDAhigh ..  ]
+"135
+[; ;i2c.c: 135:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"136
+[; ;i2c.c: 136:     I2C_SCLhigh();
+[e ( _I2C_SCLhigh ..  ]
+"137
+[; ;i2c.c: 137:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"138
+[; ;i2c.c: 138:     PORTDbits.RD2;
+[e . . _PORTDbits 0 2 ]
+"139
+[; ;i2c.c: 139:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"140
+[; ;i2c.c: 140:     I2C_SCLlow();
+[e ( _I2C_SCLlow ..  ]
+"142
+[; ;i2c.c: 142:     return aRet;
+[e ) _aRet ]
+[e $UE 1633  ]
+"143
+[; ;i2c.c: 143: }
+[e :UE 1633 ]
+}
+"149
+[; ;i2c.c: 149: unsigned char I2C_byteWrite(unsigned char inData)
+[v _I2C_byteWrite `(uc ~T0 @X0 1 ef1`uc ]
+"150
+[; ;i2c.c: 150: {
+{
+[e :U _I2C_byteWrite ]
+"149
+[; ;i2c.c: 149: unsigned char I2C_byteWrite(unsigned char inData)
+[v _inData `uc ~T0 @X0 1 r1 ]
+"150
+[; ;i2c.c: 150: {
+[f ]
+"152
+[; ;i2c.c: 152:     unsigned char aRet;
+[v _aRet `uc ~T0 @X0 1 a ]
+"153
+[; ;i2c.c: 153:     int i;
+[v _i `i ~T0 @X0 1 a ]
+"156
+[; ;i2c.c: 156:     for (i = 0; i < 8; i++)
+{
+[e = _i -> 0 `i ]
+[e $ < _i -> 8 `i 1635  ]
+[e $U 1636  ]
+[e :U 1635 ]
+"157
+[; ;i2c.c: 157:     {
+{
+"158
+[; ;i2c.c: 158:         I2C_bitWrite(inData % 2);
+[e ( _I2C_bitWrite (1 -> % -> _inData `i -> 2 `i `uc ]
+"159
+[; ;i2c.c: 159:         inData /= 2;
+[e =/ _inData -> 2 `i ]
+"160
+[; ;i2c.c: 160:     }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 8 `i 1635  ]
+[e :U 1636 ]
+}
+"163
+[; ;i2c.c: 163:     aRet = I2C_bitRead();
+[e = _aRet ( _I2C_bitRead ..  ]
+"165
+[; ;i2c.c: 165:     return aRet;
+[e ) _aRet ]
+[e $UE 1634  ]
+"166
+[; ;i2c.c: 166: }
+[e :UE 1634 ]
+}
+"168
+[; ;i2c.c: 168: unsigned char I2C_byteRead(unsigned char inAck)
+[v _I2C_byteRead `(uc ~T0 @X0 1 ef1`uc ]
+"169
+[; ;i2c.c: 169: {
+{
+[e :U _I2C_byteRead ]
+"168
+[; ;i2c.c: 168: unsigned char I2C_byteRead(unsigned char inAck)
+[v _inAck `uc ~T0 @X0 1 r1 ]
+"169
+[; ;i2c.c: 169: {
+[f ]
+"170
+[; ;i2c.c: 170:     unsigned char aRet;
+[v _aRet `uc ~T0 @X0 1 a ]
+"171
+[; ;i2c.c: 171:     return aRet;
+[e ) _aRet ]
+[e $UE 1638  ]
+"172
+[; ;i2c.c: 172: }
+[e :UE 1638 ]
 }
