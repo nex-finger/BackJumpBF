@@ -1,10 +1,28 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"7 ./i2c.h
-[; ;./i2c.h: 7: void I2C_SDAhigh(void);
+"12 ./i2c.h
+[; ;./i2c.h: 12: void I2C_SCLhigh(void);
+[v _I2C_SCLhigh `(v ~T0 @X0 0 ef ]
+"15
+[; ;./i2c.h: 15: void I2C_SDAhigh(void);
 [v _I2C_SDAhigh `(v ~T0 @X0 0 ef ]
-"800 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 800: extern volatile unsigned char TRISC __attribute__((address(0x013)));
-[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
+"862 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 862: extern volatile unsigned char TRISD __attribute__((address(0x014)));
+[v _TRISD `Vuc ~T0 @X0 0 e@20 ]
+"1148
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 1148:     struct {
+[s S59 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S59 . LATD0 LATD1 LATD2 LATD3 LATD4 LATD5 LATD6 LATD7 ]
+"1147
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 1147: typedef union {
+[u S58 `S59 1 ]
+[n S58 . . ]
+"1159
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 1159: extern volatile LATDbits_t LATDbits __attribute__((address(0x019)));
+[v _LATDbits `VS58 ~T0 @X0 0 e@25 ]
+[v F202 `(v ~T0 @X0 1 tf1`ul ]
+"20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
+[v __delay `JF202 ~T0 @X0 0 e ]
+[p i __delay ]
 "54 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 54: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1640,33 +1658,185 @@ Version 4.0 HI-TECH Software Intermediate Code
 "36289
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 36289: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-"12 i2c.c
-[; ;i2c.c: 12: void I2C_Init(void)
+"13 i2c.c
+[; ;i2c.c: 13: void I2C_Init(void)
 [v _I2C_Init `(v ~T0 @X0 1 ef ]
-"13
-[; ;i2c.c: 13: {
+"14
+[; ;i2c.c: 14: {
 {
 [e :U _I2C_Init ]
 [f ]
-"14
-[; ;i2c.c: 14:     I2C_SDAhigh();
-[e ( _I2C_SDAhigh ..  ]
 "15
-[; ;i2c.c: 15: }
+[; ;i2c.c: 15:     I2C_SCLhigh();
+[e ( _I2C_SCLhigh ..  ]
+"16
+[; ;i2c.c: 16:     I2C_SDAhigh();
+[e ( _I2C_SDAhigh ..  ]
+"17
+[; ;i2c.c: 17: }
 [e :UE 1616 ]
 }
-"19
-[; ;i2c.c: 19: void I2C_SDAhigh(void)
+"21
+[; ;i2c.c: 21: void I2C_SCLhigh(void)
+[v _I2C_SCLhigh `(v ~T0 @X0 1 ef ]
+"22
+[; ;i2c.c: 22: {
+{
+[e :U _I2C_SCLhigh ]
+[f ]
+"23
+[; ;i2c.c: 23:     TRISD = TRISD | 0b00001000;
+[e = _TRISD -> | -> _TRISD `i -> 8 `i `uc ]
+"24
+[; ;i2c.c: 24: }
+[e :UE 1617 ]
+}
+"28
+[; ;i2c.c: 28: void I2C_SCLlow(void)
+[v _I2C_SCLlow `(v ~T0 @X0 1 ef ]
+"29
+[; ;i2c.c: 29: {
+{
+[e :U _I2C_SCLlow ]
+[f ]
+"30
+[; ;i2c.c: 30:     do { LATDbits.LATD3 = 0; } while(0);
+[e :U 1621 ]
+{
+[e = . . _LATDbits 0 3 -> -> 0 `i `uc ]
+}
+[e :U 1620 ]
+"31
+[; ;i2c.c: 31:     TRISD = TRISD & 0b11110111;
+[e = _TRISD -> & -> _TRISD `i -> 247 `i `uc ]
+"32
+[; ;i2c.c: 32: }
+[e :UE 1618 ]
+}
+"36
+[; ;i2c.c: 36: void I2C_SDAhigh(void)
 [v _I2C_SDAhigh `(v ~T0 @X0 1 ef ]
-"20
-[; ;i2c.c: 20: {
+"37
+[; ;i2c.c: 37: {
 {
 [e :U _I2C_SDAhigh ]
 [f ]
-"21
-[; ;i2c.c: 21:     TRISC = TRISC | 0b00000010;
-[e = _TRISC -> | -> _TRISC `i -> 2 `i `uc ]
-"22
-[; ;i2c.c: 22: }
-[e :UE 1617 ]
+"38
+[; ;i2c.c: 38:     TRISD = TRISD | 0b00000100;
+[e = _TRISD -> | -> _TRISD `i -> 4 `i `uc ]
+"39
+[; ;i2c.c: 39: }
+[e :UE 1622 ]
+}
+"43
+[; ;i2c.c: 43: void I2C_SDAlow(void)
+[v _I2C_SDAlow `(v ~T0 @X0 1 ef ]
+"44
+[; ;i2c.c: 44: {
+{
+[e :U _I2C_SDAlow ]
+[f ]
+"45
+[; ;i2c.c: 45:     do { LATDbits.LATD2 = 0; } while(0);
+[e :U 1626 ]
+{
+[e = . . _LATDbits 0 2 -> -> 0 `i `uc ]
+}
+[e :U 1625 ]
+"46
+[; ;i2c.c: 46:     TRISD = TRISD & 0b11111011;
+[e = _TRISD -> & -> _TRISD `i -> 251 `i `uc ]
+"47
+[; ;i2c.c: 47: }
+[e :UE 1623 ]
+}
+"57
+[; ;i2c.c: 57: void I2C_StartCondition(void)
+[v _I2C_StartCondition `(v ~T0 @X0 1 ef ]
+"58
+[; ;i2c.c: 58: {
+{
+[e :U _I2C_StartCondition ]
+[f ]
+"59
+[; ;i2c.c: 59:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"60
+[; ;i2c.c: 60:     I2C_SDAlow();
+[e ( _I2C_SDAlow ..  ]
+"61
+[; ;i2c.c: 61:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"62
+[; ;i2c.c: 62:     I2C_SCLlow();
+[e ( _I2C_SCLlow ..  ]
+"63
+[; ;i2c.c: 63: }
+[e :UE 1627 ]
+}
+"73
+[; ;i2c.c: 73: void I2C_RepeatedStartCondition(void)
+[v _I2C_RepeatedStartCondition `(v ~T0 @X0 1 ef ]
+"74
+[; ;i2c.c: 74: {
+{
+[e :U _I2C_RepeatedStartCondition ]
+[f ]
+"75
+[; ;i2c.c: 75:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"76
+[; ;i2c.c: 76:     I2C_SDAhigh();
+[e ( _I2C_SDAhigh ..  ]
+"77
+[; ;i2c.c: 77:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"78
+[; ;i2c.c: 78:     I2C_SCLhigh();
+[e ( _I2C_SCLhigh ..  ]
+"79
+[; ;i2c.c: 79:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"80
+[; ;i2c.c: 80:     I2C_SDAlow();
+[e ( _I2C_SDAlow ..  ]
+"81
+[; ;i2c.c: 81:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"82
+[; ;i2c.c: 82:     I2C_SCLlow();
+[e ( _I2C_SCLlow ..  ]
+"83
+[; ;i2c.c: 83: }
+[e :UE 1628 ]
+}
+"93
+[; ;i2c.c: 93: void I2C_StopCondition(void)
+[v _I2C_StopCondition `(v ~T0 @X0 1 ef ]
+"94
+[; ;i2c.c: 94: {
+{
+[e :U _I2C_StopCondition ]
+[f ]
+"95
+[; ;i2c.c: 95:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"96
+[; ;i2c.c: 96:     I2C_SDAlow();
+[e ( _I2C_SDAlow ..  ]
+"97
+[; ;i2c.c: 97:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"98
+[; ;i2c.c: 98:     I2C_SCLhigh();
+[e ( _I2C_SCLhigh ..  ]
+"99
+[; ;i2c.c: 99:     _delay((unsigned long)((6)*(32000000U/4000000.0)));
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 32000000 `ul `d .4000000.0 `ul ]
+"100
+[; ;i2c.c: 100:     I2C_SDAhigh();
+[e ( _I2C_SDAhigh ..  ]
+"101
+[; ;i2c.c: 101: }
+[e :UE 1629 ]
 }

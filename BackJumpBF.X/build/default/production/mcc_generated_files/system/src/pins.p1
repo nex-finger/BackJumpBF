@@ -1853,8 +1853,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/system/src/pins.c: 55:     TRISC = 0xB8;
 [e = _TRISC -> -> 184 `i `uc ]
 "56
-[; ;mcc_generated_files/system/src/pins.c: 56:     TRISD = 0xFF;
-[e = _TRISD -> -> 255 `i `uc ]
+[; ;mcc_generated_files/system/src/pins.c: 56:     TRISD = 0xF7;
+[e = _TRISD -> -> 247 `i `uc ]
 "57
 [; ;mcc_generated_files/system/src/pins.c: 57:     TRISE = 0x7;
 [e = _TRISE -> -> 7 `i `uc ]

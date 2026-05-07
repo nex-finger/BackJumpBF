@@ -20770,7 +20770,7 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xFF;
     TRISC = 0xB8;
-    TRISD = 0xFF;
+    TRISD = 0xF7;
     TRISE = 0x7;
 
 

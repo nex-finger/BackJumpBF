@@ -62,6 +62,11 @@ int main(void)
 
     while (1)
     {
+        I2C_StartCondition();
+        __delay_ms(1000);
+        IO_RC0_Toggle();
+
+        I2C_StopCondition();
         __delay_ms(1000);
         IO_RC0_Toggle();
     }

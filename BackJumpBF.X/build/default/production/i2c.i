@@ -21138,20 +21138,93 @@ void SYSTEM_Initialize(void);
 
 
 
+
+
+
 void I2C_Init(void);
+
+
+void I2C_SCLhigh(void);
+void I2C_SCLlow(void);
+
 void I2C_SDAhigh(void);
+void I2C_SDAlow(void);
+
+
+void I2C_StartCondition(void);
+void I2C_RepeatedStartCondition(void);
+void I2C_StopCondition(void);
+
+
+void I2C_byteWrite(unsigned char in);
+unsigned char I2C_byteRead(void);
 # 9 "i2c.c" 2
+
 
 
 
 void I2C_Init(void)
 {
+    I2C_SCLhigh();
     I2C_SDAhigh();
+}
+
+
+
+void I2C_SCLhigh(void)
+{
+    TRISD = TRISD | 0b00001000;
+}
+
+
+
+void I2C_SCLlow(void)
+{
+    do { LATDbits.LATD3 = 0; } while(0);
+    TRISD = TRISD & 0b11110111;
 }
 
 
 
 void I2C_SDAhigh(void)
 {
-    TRISC = TRISC | 0b00000010;
+    TRISD = TRISD | 0b00000100;
+}
+
+
+
+void I2C_SDAlow(void)
+{
+    do { LATDbits.LATD2 = 0; } while(0);
+    TRISD = TRISD & 0b11111011;
+}
+# 57 "i2c.c"
+void I2C_StartCondition(void)
+{
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAlow();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLlow();
+}
+# 73 "i2c.c"
+void I2C_RepeatedStartCondition(void)
+{
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAhigh();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLhigh();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAlow();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLlow();
+}
+# 93 "i2c.c"
+void I2C_StopCondition(void)
+{
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAlow();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SCLhigh();
+    _delay((unsigned long)((6)*(32000000U/4000000.0)));
+    I2C_SDAhigh();
 }

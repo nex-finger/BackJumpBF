@@ -1,0 +1,7 @@
+# ビルド生成物はいらない
+BackJumpBF.X/build/
+BackJumpBF.X/dist/
+BackJumpBF.X/nbproject/
+
+# 動画はいらない
+videeo/

@@ -14,9 +14,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "370
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 370: extern volatile INTCONbits_t INTCONbits __attribute__((address(0x00B)));
 [v _INTCONbits `VS30 ~T0 @X0 0 e@11 ]
-"6 ./i2c.h
-[; ;./i2c.h: 6: void I2C_Init(void);
+"9 ./i2c.h
+[; ;./i2c.h: 9: void I2C_Init(void);
 [v _I2C_Init `(v ~T0 @X0 0 ef ]
+"19
+[; ;./i2c.h: 19: void I2C_StartCondition(void);
+[v _I2C_StartCondition `(v ~T0 @X0 0 ef ]
 [v F202 `(v ~T0 @X0 1 tf1`ul ]
 "20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
 [v __delay `JF202 ~T0 @X0 0 e ]
@@ -32,6 +35,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1097
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 1097: extern volatile LATCbits_t LATCbits __attribute__((address(0x018)));
 [v _LATCbits `VS56 ~T0 @X0 0 e@24 ]
+"21 ./i2c.h
+[; ;./i2c.h: 21: void I2C_StopCondition(void);
+[v _I2C_StopCondition `(v ~T0 @X0 0 ef ]
 "54 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc/pic16f18877.h: 54: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1695,22 +1701,38 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 64:     {
 {
 "65
-[; ;main.c: 65:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `ul `d .4000.0 `ul ]
+[; ;main.c: 65:         I2C_StartCondition();
+[e ( _I2C_StartCondition ..  ]
 "66
-[; ;main.c: 66:         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
+[; ;main.c: 66:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `ul `d .4000.0 `ul ]
+"67
+[; ;main.c: 67:         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
 [e :U 1622 ]
 {
 [e = . . _LATCbits 0 0 -> ~ -> . . _LATCbits 0 0 `i `uc ]
 }
 [e :U 1621 ]
-"67
-[; ;main.c: 67:     }
+"69
+[; ;main.c: 69:         I2C_StopCondition();
+[e ( _I2C_StopCondition ..  ]
+"70
+[; ;main.c: 70:         _delay((unsigned long)((1000)*(32000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `ul `d .4000.0 `ul ]
+"71
+[; ;main.c: 71:         do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0);
+[e :U 1625 ]
+{
+[e = . . _LATCbits 0 0 -> ~ -> . . _LATCbits 0 0 `i `uc ]
+}
+[e :U 1624 ]
+"72
+[; ;main.c: 72:     }
 }
 [e :U 1617 ]
 [e $U 1618  ]
 [e :U 1619 ]
-"68
-[; ;main.c: 68: }
+"73
+[; ;main.c: 73: }
 [e :UE 1616 ]
 }
