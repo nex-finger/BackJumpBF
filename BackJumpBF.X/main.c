@@ -62,12 +62,12 @@ int main(void)
 
     while (1)
     {
-        I2C_StartCondition();
+        (void)I2C_setValue(0x07, 0x12, 0x00);
         __delay_ms(1000);
-        IO_RC0_Toggle();
+        // IO_RC0_Toggle();
 
-        I2C_StopCondition();
+        (void)I2C_setValue(0x07, 0x12, 0xff);
         __delay_ms(1000);
-        IO_RC0_Toggle();
+        // IO_RC0_Toggle();
     }
 }

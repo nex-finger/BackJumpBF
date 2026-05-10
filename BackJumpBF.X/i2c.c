@@ -14,6 +14,12 @@ void I2C_Init(void)
 {
     I2C_SCLhigh();
     I2C_SDAhigh();
+
+    I2C_StartCondition();
+    I2C_StopCondition();
+
+    /* デバイス7を出力用に */
+    I2C_setValue(0x07, 0x00, 0x00);
 }
 
 /* SCLをHiにする
@@ -102,7 +108,11 @@ void I2C_StopCondition(void)
 
 /* ビット書き込み
  * SCLはLow前提 → 必ずLowになる
- * SDAは不定 → 不定になる */
+ * SDAは不定 → 不定になる
+ * SCL      ┌──┐
+ *     ─────┘  └──
+ * SDA ──┬────────
+ *     ──┴──────── */
 void I2C_bitWrite(unsigned char in)
 {
     __delay_us(I2C_TICK);
@@ -120,12 +130,16 @@ void I2C_bitWrite(unsigned char in)
     __delay_us(I2C_TICK);
     I2C_SCLhigh();
     __delay_us(I2C_TICK * 2);
-    I2C_SDAlow();
+    I2C_SCLlow();
 }
 
 /* ビット読み取り
  * SCLはLow前提 → 必ずLowになる
- * SDAは不定 → 不定になる */
+ * SDAは不定 → 不定になる
+ * SCL      ┌──┐
+ *     ─────┘  └──
+ * SDA ──┬────────
+ *     ──┘         */
 unsigned char I2C_bitRead(void)
 {
     unsigned char aRet;
@@ -135,7 +149,7 @@ unsigned char I2C_bitRead(void)
     __delay_us(I2C_TICK);
     I2C_SCLhigh();
     __delay_us(I2C_TICK);
-    IO_RD2_GetValue(); /* 入力ポートから取得 */
+    aRet = IO_RD2_GetValue(); /* 入力ポートから取得 */
     __delay_us(I2C_TICK);
     I2C_SCLlow();
 
@@ -150,13 +164,22 @@ unsigned char I2C_byteWrite(unsigned char inData)
 {
     /* 戻り値はクライアントからのAck */
     unsigned char aRet;
+    unsigned char aBit;
     int i;
 
     /* 8ビットのデータを送信 */
     for (i = 0; i < 8; i++)
     {
-        I2C_bitWrite(inData % 2);
-        inData /= 2;
+        if ((unsigned char)(inData & 0x80) == 0x80)
+        {
+            aBit = 1;
+        }
+        else
+        {
+            aBit = 0;
+        }
+        I2C_bitWrite(aBit);
+        inData *= 2;
     }
 
     /* 1ビットのAckを受信 */
@@ -165,13 +188,43 @@ unsigned char I2C_byteWrite(unsigned char inData)
     return aRet;
 }
 
+/* ホストからクライアントへの1バイト送信
+ * SCLはLow前提 → 必ずLowになる
+ * SDAは不定 → 不定になる(Ackの値)
+ * aRet: Ack or Nack */
 unsigned char I2C_byteRead(unsigned char inAck)
 {
-    unsigned char aRet;
+    /* 戻り値はクライアントからのデータ */
+    unsigned char aRet = 0;
+    int i;
+
+    /* 8ビットのデータを送信 */
+    for (i = 0; i < 8; i++)
+    {
+        aRet *= 2;
+        aRet += I2C_bitRead();
+    }
+
+    /* 1ビットのAckを受信 */
+    I2C_bitWrite(inAck);
+
+    return aRet;
+}
+
+/* アドレス → i2cに流すオペコードへの変換
+ * in  inDevice: 物理デバイス番号
+ *     inRW: R/Wビット
+ * ret aRet: 通信電文 */
+unsigned char I2C_DtoO(unsigned char inDevice, unsigned char inRW)
+{
+    /* bit7  6  5  4  3  2  1  0 */
+    /*    0  1  0  0  A2 A1 A0 0*/
+    unsigned char aRet = 0b01000000 | (inDevice * 2) | inRW;
     return aRet;
 }
 
 /* 1バイト書き込み
+ * 指定のデバイス、アドレスに任意のデータを更新する
  * | host1| --- Start --> |client|
  * |     2| -- Opecode -> |      |
  * |     3| --- Wbit ---> |      |
@@ -180,9 +233,29 @@ unsigned char I2C_byteRead(unsigned char inAck)
  * |     6| <--- Ack ---- |      |
  * |     7| --- Wdata --> |      |
  * |     8| <--- Nack --- |      |
- * |     9| --- Stop ---> |      | */
+ * |     9| --- Stop ---> |      |
+ * in  inDevice: 書き込み先の物理デバイス番号
+ *     inAddr: 書き込み先のアドレス
+ *     inData: 書き込むデータ
+ * ret aAck: 書き込み先のAck, Nack */
+unsigned char I2C_setValue(unsigned char inDevice, unsigned char inAddr, unsigned char inData)
+{
+    /* クライアントからのACKが1回でもかけていればNACK */
+    unsigned char aAck = I2C_ACK;
+    /* アドレス → オペコードの変換 */
+    unsigned char aOpecode = I2C_DtoO(inDevice, I2C_WBIT);
+
+    I2C_StartCondition();
+    aAck |= I2C_byteWrite(aOpecode);
+    aAck |= I2C_byteWrite(inAddr);
+    aAck |= I2C_byteWrite(inData);
+    I2C_StopCondition();
+
+    return aAck;
+}
 
 /* 1バイト読み取り
+ * 指定のデバイス、アドレスのデータを取得する
  * | host1| --- Start --> |client|
  * |     2| -- Opecode -> |      |
  * |     3| --- Wbit ---> |      |
@@ -193,4 +266,13 @@ unsigned char I2C_byteRead(unsigned char inAck)
  * |     8| <--- Ack ---- |      |
  * |     9| <-- Rdata --- |      |
  * |    10| --- Nack ---> |      |
- * |    11| --- Stop ---> |      | */
+ * |    11| --- Stop ---> |      |
+ * in  inDevice: 読み取り先の物理デバイス番号
+ *     inAddr: 読み取り先のアドレス
+ *     inAck: 読み取り先に応答するAck, Nack
+ * ret aData: 読み取り先から取得したデータ */
+unsigned char I2C_getValue(unsigned char inDevice, unsigned char inAddr, unsigned char inAck)
+{
+    unsigned char aData;
+    return aData;
+}
