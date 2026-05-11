@@ -41,6 +41,8 @@
 
 int main(void)
 {
+    unsigned char i;
+
     SYSTEM_Initialize();
     // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
     // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global and Peripheral Interrupts
@@ -62,12 +64,20 @@ int main(void)
 
     while (1)
     {
-        (void)I2C_setValue(0x07, 0x12, 0x00);
-        __delay_ms(1000);
-        // IO_RC0_Toggle();
+        i = 0;
+        while (1)
+        {
+            (void)I2C_setValue(0x07, 0x12, i);
+            __delay_ms(50);
 
-        (void)I2C_setValue(0x07, 0x12, 0xff);
-        __delay_ms(1000);
+            (void)I2C_setValue(0x07, 0x13, i);
+            __delay_ms(50);
+
+            i++;
+        }
+
+        //(void)I2C_setValue(0x07, 0x12, 0xff);
+        //__delay_ms(1000);
         // IO_RC0_Toggle();
     }
 }

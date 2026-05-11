@@ -1,8 +1,10 @@
-/* i2c関連 */
+/* i2c関連
+ * 詳細はMCP23017のデータシートを参照すること */
 
 #ifndef I2C_H
 #define I2C_H
 
+/* 通信速度確保のためのウェイト(us) */
 #define I2C_TICK 6
 
 #define I2C_ACK 0
@@ -10,6 +12,16 @@
 
 #define I2C_WBIT 0
 #define I2C_RBIT 1
+
+/* デバイスID */
+#define I2C_DEVICE_ID_IN_PC_AR 0
+#define I2C_DEVICE_ID_IN_ALU_ARU 1
+#define I2C_DEVICE_ID_OUT_PC 2
+#define I2C_DEVICE_ID_OUT_AR 3
+#define I2C_DEVICE_ID_OUT_MEM 4
+#define I2C_DEVICE_ID_OUT_IN 5
+#define I2C_DEVICE_ID_OUT_OUT 6
+#define I2C_DEVICE_ID_OUT_CODE 7
 
 /* 初期化 */
 void I2C_Init(void);

@@ -18,8 +18,10 @@ void I2C_Init(void)
     I2C_StartCondition();
     I2C_StopCondition();
 
-    /* デバイス7を出力用に */
+    /* テストプログラム ----> */
     I2C_setValue(0x07, 0x00, 0x00);
+    I2C_setValue(0x07, 0x01, 0x00);
+    /* <---- テストプログラム */
 }
 
 /* SCLをHiにする
