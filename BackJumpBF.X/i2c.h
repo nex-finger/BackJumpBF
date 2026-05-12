@@ -1,11 +1,12 @@
-/* i2c関連
+/* @file i2c.h
+ * i2c関連
  * 詳細はMCP23017のデータシートを参照すること */
 
 #ifndef I2C_H
 #define I2C_H
 
 /* 通信速度確保のためのウェイト(us) */
-#define I2C_TICK 6
+#define I2C_TICK 1
 
 #define I2C_ACK 0
 #define I2C_NACK 1

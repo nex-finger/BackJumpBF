@@ -34,6 +34,7 @@
 */
 #include "mcc_generated_files/system/system.h"
 #include "i2c.h"
+#include "mcp23017.h"
 
 /*
     Main application
@@ -67,11 +68,13 @@ int main(void)
         i = 0;
         while (1)
         {
-            (void)I2C_setValue(0x07, 0x12, i);
-            __delay_ms(50);
+            //(void)I2C_setValue(0x07, 0x13, 0x40);
+            //__delay_ms(50);
+            //(void)I2C_setValue(0x07, 0x13, 0x00);
+            //__delay_ms(50);
 
-            (void)I2C_setValue(0x07, 0x13, i);
-            __delay_ms(50);
+            mcp23017_set(0x07, i);
+            __delay_ms(10);
 
             i++;
         }
