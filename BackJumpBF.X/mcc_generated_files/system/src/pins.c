@@ -88,7 +88,7 @@ void PIN_MANAGER_Initialize(void)
     */
     SLRCONA = 0xFF;
     SLRCONB = 0xFF;
-    SLRCONC = 0xFF;
+    SLRCONC = 0x3F;
     SLRCOND = 0xF3;
     SLRCONE = 0x7;
     /**
@@ -96,7 +96,7 @@ void PIN_MANAGER_Initialize(void)
     */
     INLVLA = 0xFF;
     INLVLB = 0xFF;
-    INLVLC = 0xFF;
+    INLVLC = 0x3F;
     INLVLD = 0xF3;
     INLVLE = 0xF;
 

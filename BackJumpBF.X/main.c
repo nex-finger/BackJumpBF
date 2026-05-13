@@ -43,6 +43,7 @@
 int main(void)
 {
     unsigned char i;
+    unsigned char rx;
 
     SYSTEM_Initialize();
     // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
@@ -68,6 +69,19 @@ int main(void)
         i = 0;
         while (1)
         {
+            /*
+            if (EUSART_IsRxReady())
+            {
+                rx = EUSART_Read();
+
+                while (!EUSART_IsTxReady())
+                {
+                    ;
+                }
+
+                EUSART_Write(rx);
+            } */
+            EUSART_Write(i);
             //(void)I2C_setValue(0x07, 0x13, 0x40);
             //__delay_ms(50);
             //(void)I2C_setValue(0x07, 0x13, 0x00);
