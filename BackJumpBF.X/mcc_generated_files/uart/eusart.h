@@ -75,8 +75,8 @@
 #define UART1__AutoBaudEventEnableGet    (NULL)
 #define UART1_ErrorGet             EUSART_ErrorGet
 
-#define UART1_TxCompleteCallbackRegister     (NULL)
-#define UART1_RxCompleteCallbackRegister      (NULL)
+#define UART1_TxCompleteCallbackRegister     EUSART_TxCompleteCallbackRegister
+#define UART1_RxCompleteCallbackRegister      EUSART_RxCompleteCallbackRegister
 #define UART1_TxCollisionCallbackRegister  (NULL)
 #define UART1_FramingErrorCallbackRegister EUSART_FramingErrorCallbackRegister
 #define UART1_OverrunErrorCallbackRegister EUSART_OverrunErrorCallbackRegister
@@ -176,6 +176,37 @@ void EUSART_ReceiveEnable(void);
  */
 void EUSART_ReceiveDisable(void);
 
+/**
+ * @ingroup eusart
+ * @brief This API enables the EUSART transmitter interrupt.
+ * @param None.
+ * @return None.
+ */
+void EUSART_TransmitInterruptEnable(void);
+
+/**
+ * @ingroup eusart
+ * @brief This API disables the EUSART transmitter interrupt.
+ * @param None.
+ * @return None.
+ */
+void EUSART_TransmitInterruptDisable(void);
+
+/**
+ * @ingroup eusart
+ * @brief This API enables the EUSART receiver interrupt.
+ * @param None.
+ * @return None.
+ */
+void EUSART_ReceiveInterruptEnable(void);
+
+/**
+ * @ingroup eusart
+ * @brief This API disables the EUSART receiver interrupt.
+ * @param None.
+ * @return None.
+ */
+void EUSART_ReceiveInterruptDisable(void);
 
 /**
  * @ingroup eusart
@@ -295,6 +326,71 @@ void EUSART_FramingErrorCallbackRegister(void (* callbackHandler)(void));
  * @return None.
  */
 void EUSART_OverrunErrorCallbackRegister(void (* callbackHandler)(void));
+
+/**
+ * @ingroup eusart
+ * @brief This indicates the function that will be called upon transmit interrupt.
+ * @pre Initialize the EUSART module with transmit interrupt enabled
+ * @param None.
+ * @return None.
+ */
+extern void (*EUSART_TxInterruptHandler)(void);
+
+/**
+ * @ingroup eusart
+ * @brief This API registers the function to be called upon after data has been successfully transmitted.
+ * @param callbackHandler - a function pointer which will be called upon transmitter interrupt condition.
+ * @return None.
+ */
+void EUSART_TxCompleteCallbackRegister(void (* callbackHandler)(void));
+
+/**
+ * @ingroup eusart
+ * @brief This ISR function is called upon transmitter interrupt.
+ * @param void.
+ * @return None.
+ */
+void EUSART_TransmitISR(void);
+
+/**
+ * @ingroup eusart
+ * @brief This indicates the function that will be called upon receive interrupt.
+ * @pre Initialize the EUSART module with receive interrupt enabled
+ * @param None.
+ * @return None.
+ */
+extern void (*EUSART_RxInterruptHandler)(void);
+/**
+ * @ingroup eusart
+ * @brief This API registers the function to be called upon after data has been successfully received.
+ * @param callbackHandler - a function pointer which will be called upon receiver interrupt condition.
+ * @return None.
+ */
+void EUSART_RxCompleteCallbackRegister(void (* callbackHandler)(void));
+
+/**
+ * @ingroup eusart
+ * @brief This ISR function is called upon receiver interrupt.
+ * @param void.
+ * @return None.
+ */
+void EUSART_ReceiveISR(void);
+
+/**
+ * @ingroup eusart
+ * @brief This function used to printf support for reads the 8 bits from the FIFO register receiver.
+ * @param None.
+ * @return 8-bit data from RX FIFO register.
+ */
+int getch(void);
+
+/**
+ * @ingroup eusart
+ * @brief This function used to printf support for writes a byte of data to the transmitter FIFO register.
+ * @param txData  - Data byte to write to the TX FIFO.
+ * @return None.
+ */
+void putch(char txData);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

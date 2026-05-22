@@ -40,6 +40,8 @@
     Main application
 */
 
+void init_7seg(void);
+
 int main(void)
 {
     unsigned char i;
@@ -64,6 +66,8 @@ int main(void)
 
     I2C_Init();
 
+    init_7seg();
+
     while (1)
     {
         i = 0;
@@ -81,14 +85,14 @@ int main(void)
 
                 EUSART_Write(rx);
             } */
-            EUSART_Write(i);
+            printf("This is Test.\n");
             //(void)I2C_setValue(0x07, 0x13, 0x40);
             //__delay_ms(50);
             //(void)I2C_setValue(0x07, 0x13, 0x00);
             //__delay_ms(50);
 
             mcp23017_set(0x07, i);
-            __delay_ms(10);
+            __delay_ms(100);
 
             i++;
         }
@@ -96,5 +100,21 @@ int main(void)
         //(void)I2C_setValue(0x07, 0x12, 0xff);
         //__delay_ms(1000);
         // IO_RC0_Toggle();
+    }
+}
+
+/* 起動時の7セグ表示 */
+void init_7seg()
+{
+    int i;
+    int j;
+
+    for (i = 0; i < 256; i++)
+    {
+        for (j = 3; j < 7; j++)
+        {
+            mcp23017_set((unsigned char)j, (unsigned char)i);
+        }
+        __delay_ms(20);
     }
 }
