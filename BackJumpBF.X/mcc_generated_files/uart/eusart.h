@@ -376,22 +376,6 @@ void EUSART_RxCompleteCallbackRegister(void (* callbackHandler)(void));
  */
 void EUSART_ReceiveISR(void);
 
-/**
- * @ingroup eusart
- * @brief This function used to printf support for reads the 8 bits from the FIFO register receiver.
- * @param None.
- * @return 8-bit data from RX FIFO register.
- */
-int getch(void);
-
-/**
- * @ingroup eusart
- * @brief This function used to printf support for writes a byte of data to the transmitter FIFO register.
- * @param txData  - Data byte to write to the TX FIFO.
- * @return None.
- */
-void putch(char txData);
-
 #ifdef __cplusplus  // Provide C++ Compatibility
 
     }

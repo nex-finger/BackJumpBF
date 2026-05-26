@@ -33,8 +33,12 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
-#include "i2c.h"
-#include "mcp23017.h"
+#include "command.h"  /* コマンド関連 */
+#include "i2c.h"      /* i2c通信関連 */
+#include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
+
+/* 改行コード確認フラグ */
+extern unsigned char gEnterFlag;
 
 /*
     Main application
@@ -68,6 +72,7 @@ int main(void)
 
     I2C_Init();
 
+    com_init();
     init_7seg();
 
     while (1)
@@ -88,11 +93,16 @@ int main(void)
 
                 EUSART_Write(rx);
             } */
-            printf("%lu ", _);
+            // printf("%lu ", _);
             //(void)I2C_setValue(0x07, 0x13, 0x40);
             //__delay_ms(50);
             //(void)I2C_setValue(0x07, 0x13, 0x00);
             //__delay_ms(50);
+
+            if (gEnterFlag)
+            {
+                com_response();
+            }
 
             mcp23017_set(0x07, i);
             __delay_ms(100);
@@ -115,7 +125,7 @@ void init_7seg()
 
     for (i = 0; i < 256; i++)
     {
-        for (j = 3; j < 7; j++)
+        for (j = 3; j <= 7; j++)
         {
             mcp23017_set((unsigned char)j, (unsigned char)i);
         }
