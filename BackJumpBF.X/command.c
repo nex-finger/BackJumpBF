@@ -4,7 +4,7 @@
 #include "mcc_generated_files/system/system.h"
 #include "command.h"
 
-extern unsigned char gEnterFlag;
+// extern unsigned char gEnterFlag;
 
 /* 1文字出力
  * バッファが溢れないように1ミリ秒待機する */
@@ -20,7 +20,7 @@ void com_response(void)
     unsigned char aInput[32];
     int i = 0;
 
-    /* エンターキーフラグをたたむ */
+    /* エンターキーフラグをたたむ
     gEnterFlag = 0;
 
     while (1)
@@ -44,7 +44,7 @@ void com_init(void)
     int i = 0;
 
     /* 改行コード確認フラグの初期化 */
-    gEnterFlag = 0;
+    // gEnterFlag = 0;
 
     while (cStr[i] != '\0')
     {

@@ -38,7 +38,7 @@
 #include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
 
 /* 改行コード確認フラグ */
-extern unsigned char gEnterFlag;
+// extern unsigned char gEnterFlag;
 
 /*
     Main application
@@ -75,41 +75,43 @@ int main(void)
     com_init();
     init_7seg();
 
+    i = 0;
+    _ = 0;
+
+    /* 無限ループ タスク優先度が大きいほうが採用される */
     while (1)
     {
-        i = 0;
-        _ = 0;
-        while (1)
+
+        /*
+        if (EUSART_IsRxReady())
         {
-            /*
-            if (EUSART_IsRxReady())
+            rx = EUSART_Read();
+
+            while (!EUSART_IsTxReady())
             {
-                rx = EUSART_Read();
-
-                while (!EUSART_IsTxReady())
-                {
-                    ;
-                }
-
-                EUSART_Write(rx);
-            } */
-            // printf("%lu ", _);
-            //(void)I2C_setValue(0x07, 0x13, 0x40);
-            //__delay_ms(50);
-            //(void)I2C_setValue(0x07, 0x13, 0x00);
-            //__delay_ms(50);
-
-            if (gEnterFlag)
-            {
-                com_response();
+                ;
             }
 
-            mcp23017_set(0x07, i);
-            __delay_ms(100);
+            EUSART_Write(rx);
+        } */
+        // printf("%lu ", _);
+        //(void)I2C_setValue(0x07, 0x13, 0x40);
+        //__delay_ms(50);
+        //(void)I2C_setValue(0x07, 0x13, 0x00);
+        //__delay_ms(50);
 
-            i++;
-            _++;
+        /*
+        if (gEnterFlag)
+        {
+            com_response();
         }
+            */
+
+        mcp23017_set(0x07, i);
+        __delay_ms(100);
+
+        i++;
+        _++;
 
         //(void)I2C_setValue(0x07, 0x12, 0xff);
         //__delay_ms(1000);

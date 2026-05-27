@@ -94,7 +94,7 @@ static volatile uint8_t eusartRxCount;
 static volatile eusart_status_t eusartRxLastError;
 
 /* 改行コード確認フラグ */
-unsigned char gEnterFlag;
+// unsigned char gEnterFlag;
 
 /**
   Section: EUSART APIs
@@ -322,14 +322,16 @@ void EUSART_ReceiveISR(void)
 
     regValue = RC1REG;
 
-    /* エンターキーならフラグを立てる ----> */
+    /* エンターキーならフラグを立てる ---->
     if (regValue == '\r')
     {
         gEnterFlag = 1;
     }
+    */
 
-    /* コールバックする ----> */
+    /* コールバックする ---->
     EUSART_Write(regValue);
+    */
 
     tempRxHead = (eusartRxHead + 1U) & EUSART_RX_BUFFER_MASK; // Buffer size of RX should be in the 2^n
     if (tempRxHead == eusartRxTail)
