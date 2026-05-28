@@ -78,6 +78,18 @@ int main(void)
     i = 0;
     _ = 0;
 
+    // EEPROM_Write(0x10, 65);
+    unsigned char eetest = EEPROM_Read(0x10);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+    EUSART_Write(eetest);
+
     /* 無限ループ タスク優先度が大きいほうが採用される */
     while (1)
     {
@@ -107,6 +119,7 @@ int main(void)
         }
             */
 
+        EUSART_Write(i);
         mcp23017_set(0x07, i);
         __delay_ms(100);
 

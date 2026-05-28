@@ -1,17 +1,14 @@
-/**
- * System Driver Source File
- * 
- * @file system.c
- * 
- * @ingroup systemdriver
- * 
- * @brief This file contains the API implementation for the System driver.
+ /**
+ * EEPROM generated driver header file.
  *
- * @version Driver Version 2.0.3
+ * @file eeprom_inteface.h
+ * 
+ * @ingroup eeprom_interface
+ * 
+ * @brief This file contains the definition of the EEPROM interface for the EEPROM driver.
  *
- * @version Package Version 4.1.4
+ * @version EEPROM Driver Version 1.0.1
 */
-
 /*
 ? [2026] Microchip Technology Inc. and its subsidiaries.
 
@@ -33,15 +30,28 @@
     THIS SOFTWARE.
 */
 
-#include "../system.h"
+#ifndef I2C_EEPROM_INTERFACE_H
+#define I2C_EEPROM_INTERFACE_H
 
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 
-void SYSTEM_Initialize(void)
+/**
+ * @ingroup eeprom_interface
+ * @struct EEPROM_INTERFACE 
+ * @brief Defines the EEPROM interface.
+ */
+typedef struct EEPROM_INTERFACE
 {
-    CLOCK_Initialize();
-    PIN_MANAGER_Initialize();
-    EUSART_Initialize();
-    NVM_Initialize();
-    INTERRUPT_Initialize();
-}
+    
+    bool (*SequentialWrite)(uint32_t address, uint8_t *data, size_t dataLength);
+    bool (*SequentialRead)(uint32_t address, uint8_t *data, size_t dataLength);
+    bool (*PageWrite)(uint32_t address, uint8_t *data);    
+    bool (*PageRead)(uint32_t address, uint8_t *data);
+    bool (*ByteWrite)(uint32_t address, uint8_t *data);
+    bool (*ByteRead)(uint32_t address, uint8_t *data);
+    bool (*IsBusy)(void);
+} EEPROM_INTERFACE_t;
 
+#endif // end of I2C_EEPROM_INTERFACE_H

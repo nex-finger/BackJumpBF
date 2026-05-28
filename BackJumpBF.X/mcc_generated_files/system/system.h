@@ -42,6 +42,7 @@
 #include "config_bits.h"
 #include "../system/pins.h"
 #include "../uart/eusart.h"
+#include "../nvm/nvm.h"
 #include "../system/interrupt.h"
 #include "../system/clock.h"
 

@@ -1,17 +1,14 @@
 /**
- * System Driver Source File
- * 
- * @file system.c
- * 
- * @ingroup systemdriver
- * 
- * @brief This file contains the API implementation for the System driver.
+ * EEPROM generated driver source file.
  *
- * @version Driver Version 2.0.3
+ * @file eeprom.c
+ * 
+ * @ingroup eeprom
+ * 
+ * @brief Contains API definitions for the EEPROM driver.
  *
- * @version Package Version 4.1.4
+ * @version EEPROM Driver Version 1.0.1
 */
-
 /*
 ? [2026] Microchip Technology Inc. and its subsidiaries.
 
@@ -33,15 +30,43 @@
     THIS SOFTWARE.
 */
 
-#include "../system.h"
+#include "../../eeprom-lib/eeprom.h"
+#include "../../eeprom-lib/eeprom_interface.h"
+#include "../../nvm/nvm.h"
+#include <stdlib.h>
 
+const EEPROM_INTERFACE_t eeprom_interface = {
+    .SequentialWrite = NULL,
+    .SequentialRead = NULL,
+    .PageWrite = NULL,
+    .PageRead = NULL,
+    .ByteWrite = EEPROM_ByteWrite,
+    .ByteRead = EEPROM_ByteRead,
+    .IsBusy = NVM_IsBusy,
+};
 
-void SYSTEM_Initialize(void)
+bool EEPROM_ByteWrite(uint32_t address, uint8_t *data)
 {
-    CLOCK_Initialize();
-    PIN_MANAGER_Initialize();
-    EUSART_Initialize();
-    NVM_Initialize();
-    INTERRUPT_Initialize();
+    uint8_t getData = *data;
+    eeprom_address_t writeAddress = (eeprom_address_t) (address);
+    NVM_UnlockKeySet(UNLOCK_KEY);
+    EEPROM_Write(writeAddress, getData);
+    NVM_UnlockKeyClear();
+    while (NVM_IsBusy());    
+    if (NVM_StatusGet() == NVM_OK)
+    {
+        return true;
+    }
+    else
+    {
+        NVM_StatusClear();
+        return false;
+    }
 }
 
+bool EEPROM_ByteRead(uint32_t address, uint8_t *data)
+{
+    eeprom_address_t readAddress = (eeprom_address_t) (address);
+    *data = EEPROM_Read(readAddress);
+    return true;
+}
