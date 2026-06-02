@@ -4,9 +4,10 @@
 #include "mcc_generated_files/system/system.h"
 #include "task.h"
 
-static struct sTaskTable[] = {
-    {TASK_SERIAL_INPUT, t_serialinput, 0, 4},
-    {TASK_SERIAL_CALLBACK, null, 0, 3},
+#define null 0
+
+static struct stTaskTable sTask[] = {
+    {TASK_SERIAL_INPUT, null},
     {TASK_SERIAL_STD_OUTPUT, null, 0, 2},
     {TASK_SERIAL_ERR_OUTPUT, null, 0, 2},
     {TASK_COMMAND_PARSE, null, 0, 2},

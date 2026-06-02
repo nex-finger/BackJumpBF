@@ -18,12 +18,12 @@
 #define TASK_10MS 10
 #define TASK_IDLE 11
 
-struct sTaskTable
+struct stTaskTable
 {
     int mId;
     int (*mpFunc)(void);
     unsigned char mReq;
     unsigned char mPri;
-}
+};
 
 #endif /* TASK_H */
