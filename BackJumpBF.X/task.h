@@ -22,8 +22,20 @@ struct stTaskTable
 {
     int mId;
     int (*mpFunc)(void);
-    unsigned char mReq;
-    unsigned char mPri;
+    unsigned char mReqCnt;
 };
+
+int task_serial_input(void);
+int task_serial_callback(void);
+int task_serial_std_output(void);
+int task_serial_err_output(void);
+int task_command_parse(void);
+int task_command_excute(void);
+int task_input_queue_reset(void);
+int task_output_update(void);
+int task_input_update(void);
+int task_LED_update(void);
+int task_10ms(void);
+int task_idle(void);
 
 #endif /* TASK_H */
