@@ -18,11 +18,13 @@
 #define TASK_10MS 10
 #define TASK_IDLE 11
 
+#define TASK_NUM 12
+
 struct stTaskTable
 {
-    int mId;
-    int (*mpFunc)(void);
-    unsigned char mReqCnt;
+    int mId;               /* タスクID */
+    int (*mpFunc)(void);   /* タスク関数 */
+    unsigned char mReqCnt; /* リクエスト数 */
 };
 
 int task_serial_input(void);
@@ -37,5 +39,11 @@ int task_input_update(void);
 int task_LED_update(void);
 int task_10ms(void);
 int task_idle(void);
+
+unsigned char TASK_GET(int inID);
+unsigned char TASK_REGISTER(int inID);
+unsigned char TASK_COMPLETE(int inID);
+
+void TASK_Scheduler(void);
 
 #endif /* TASK_H */

@@ -181,3 +181,30 @@ int task_idle(void)
     int aRet;
     return aRet;
 }
+
+/* リクエスト状況取得
+ *
+ */
+unsigned char TASK_GET(int inID)
+{
+    return sTask[inID].mReqCnt;
+}
+
+/* リクエスト追加 */
+void TASK_REGISTER(int inID)
+{
+}
+
+/* リクエスト取り消し */
+void TASK_COMPLETE(int inID)
+{
+}
+
+void TASK_Scheduler(void)
+{
+    int i;
+
+    for (i = 0; i < TASK_NUM; i++)
+    {
+    }
+}

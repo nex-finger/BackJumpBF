@@ -90,46 +90,52 @@ int main(void)
     EUSART_Write(eetest);
     EUSART_Write(eetest);
 
-    /* 無限ループ タスク優先度が大きいほうが採用される */
     while (1)
     {
-
-        /*
-        if (EUSART_IsRxReady())
-        {
-            rx = EUSART_Read();
-
-            while (!EUSART_IsTxReady())
-            {
-                ;
-            }
-
-            EUSART_Write(rx);
-        } */
-        // printf("%lu ", _);
-        //(void)I2C_setValue(0x07, 0x13, 0x40);
-        //__delay_ms(50);
-        //(void)I2C_setValue(0x07, 0x13, 0x00);
-        //__delay_ms(50);
-
-        /*
-        if (gEnterFlag)
-        {
-            com_response();
-        }
-            */
-
-        EUSART_Write(i);
-        mcp23017_set(0x07, i);
-        __delay_ms(100);
-
-        i++;
-        _++;
-
-        //(void)I2C_setValue(0x07, 0x12, 0xff);
-        //__delay_ms(1000);
-        // IO_RC0_Toggle();
+        TASK_Scheduler();
+        /* タスクスケジューラはreturnしない */
     }
+
+    /* 無限ループ タスク優先度が大きいほうが採用される */
+    // while (1)
+    //{
+
+    /*
+    if (EUSART_IsRxReady())
+    {
+        rx = EUSART_Read();
+
+        while (!EUSART_IsTxReady())
+        {
+            ;
+        }
+
+        EUSART_Write(rx);
+    } */
+    // printf("%lu ", _);
+    //(void)I2C_setValue(0x07, 0x13, 0x40);
+    //__delay_ms(50);
+    //(void)I2C_setValue(0x07, 0x13, 0x00);
+    //__delay_ms(50);
+
+    /*
+    if (gEnterFlag)
+    {
+        com_response();
+    }
+        */
+
+    // EUSART_Write(i);
+    // mcp23017_set(0x07, i);
+    //__delay_ms(100);
+
+    // i++;
+    //_++;
+
+    //(void)I2C_setValue(0x07, 0x12, 0xff);
+    //__delay_ms(1000);
+    // IO_RC0_Toggle();
+    //}
 }
 
 /* 起動時の7セグ表示 */
