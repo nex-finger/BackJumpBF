@@ -36,6 +36,7 @@
 #include "command.h"  /* コマンド関連 */
 #include "i2c.h"      /* i2c通信関連 */
 #include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
+#include "task.h"     /* タスクスケジューラ */
 
 /* 改行コード確認フラグ */
 // extern unsigned char gEnterFlag;

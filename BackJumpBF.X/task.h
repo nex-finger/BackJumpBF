@@ -41,8 +41,8 @@ int task_10ms(void);
 int task_idle(void);
 
 unsigned char TASK_GET(int inID);
-unsigned char TASK_REGISTER(int inID);
-unsigned char TASK_COMPLETE(int inID);
+void TASK_REGISTER(int inID);
+void TASK_COMPLETE(int inID);
 
 void TASK_Scheduler(void);
 

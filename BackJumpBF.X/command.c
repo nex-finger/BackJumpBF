@@ -52,3 +52,22 @@ void com_init(void)
         i++;
     }
 }
+
+/* エラー出力を表示する
+ * in:  inCode エラーコード
+ * out: (なし) */
+void com_puterr(int inCode)
+{
+    if (inCode == 0)
+    {
+        /* ここに正常時の文字列出力 */
+    }
+    else if (inCode == -1)
+    {
+        /* ここに異常時の文字列出力 */
+    }
+    else
+    {
+        /* Do Nothing */
+    }
+}

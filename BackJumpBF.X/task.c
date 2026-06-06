@@ -3,6 +3,7 @@
 
 #include "mcc_generated_files/system/system.h"
 #include "task.h"
+#include "command.h"
 
 #define null 0
 
@@ -182,29 +183,94 @@ int task_idle(void)
     return aRet;
 }
 
-/* リクエスト状況取得
- *
+/* リクエスト追加
+ * タスクIDのタスクをリクエストする
+ * in:  inID タスクID
+ * out: (なし)
  */
-unsigned char TASK_GET(int inID)
-{
-    return sTask[inID].mReqCnt;
-}
-
-/* リクエスト追加 */
 void TASK_REGISTER(int inID)
 {
-}
-
-/* リクエスト取り消し */
-void TASK_COMPLETE(int inID)
-{
-}
-
-void TASK_Scheduler(void)
-{
+    unsigned char aFlag;
     int i;
+
+    /* 多重割り込み禁止 */
+    aFlag = INTCONbits.GIE;
+    INTCONbits.GIE = 0;
 
     for (i = 0; i < TASK_NUM; i++)
     {
+        if (sTask[i].mId == inID)
+        {
+            sTask[i].mReqCnt++;
+            break;
+        }
+    }
+
+    /* 多重割り込み許可 */
+    INTCONbits.GIE = 1;
+
+    return;
+}
+
+/* リクエスト取り消し
+ * タスクIDのタスクリクエストを解除する
+ * タスクが複数リクエストされている場合リクエスト状態はリセットされない
+ * in:  inID
+ * out: (なし)
+ */
+void TASK_COMPLETE(int inID)
+{
+    unsigned char aFlag;
+    int i;
+
+    /* 多重割り込み禁止 */
+    aFlag = INTCONbits.GIE;
+    INTCONbits.GIE = 0;
+
+    for (i = 0; i < TASK_NUM; i++)
+    {
+        if (sTask[i].mId == inID)
+        {
+            if (sTask[i].mReqCnt != 0)
+            {
+                /* タスクリクエストがない場合はデクリメントしない */
+                sTask[i].mReqCnt--;
+            }
+            break;
+        }
+    }
+
+    /* 多重割り込み許可 */
+    INTCONbits.GIE = 1;
+
+    return;
+}
+
+/* タスクスケジューラ
+ * タスク優先度の高いタスクから実行する
+ * 決してreturnせず、無限ループする
+ * in:  (なし)
+ * out: (なし) */
+void TASK_Scheduler(void)
+{
+    unsigned char i;
+    int aTaskRet;
+
+    /* リクエストのあるタスクを検索する */
+    /* 優先度の高い順に並んでいるので、発見し次第抜ける */
+    for (i = 0; i < TASK_NUM; i++)
+    {
+        if (sTask[i].mReqCnt != 0)
+        {
+            break;
+        }
+    }
+
+    aTaskRet = sTask[i].mpFunc();
+    TASK_COMPLETE(i);
+    if (aTaskRet != 0)
+    {
+        /* タスクが正常に完了しなかった場合エラー出力 */
+        com_puterr(aTaskRet);
     }
 }
