@@ -7,6 +7,10 @@
 
 #define null 0
 
+static unsigned char sInputSerialData[INPUT_SERIAL_LEN];
+static int sInputSerialOffsetIn;
+static int sInputSerialOffsetOut;
+
 /* タスクテーブル
  * ID, 関数ポインタ, リクエスト状況, 優先度 */
 static struct stTaskTable sTask[] = {
@@ -14,10 +18,10 @@ static struct stTaskTable sTask[] = {
     {TASK_OUTPUT_UPDATE, task_output_update, 0},
     {TASK_INPUT_UPDATE, task_input_update, 0},
     {TASK_INPUT_QUEUE_RESET, task_input_queue_reset, 0},
+    {TASK_SERIAL_CALLBACK, task_serial_callback, 0},
     {TASK_SERIAL_INPUT, task_serial_input, 0},
     {TASK_LED_UPDATE, task_LED_update, 0},
     {TASK_10MS, task_10ms, 0},
-    {TASK_SERIAL_CALLBACK, task_serial_callback, 0},
     {TASK_SERIAL_STD_OUTPUT, task_serial_std_output, 0},
     {TASK_SERIAL_ERR_OUTPUT, task_serial_err_output, 0},
     {TASK_COMMAND_PARSE, task_command_parse, 0},
@@ -36,7 +40,35 @@ static struct stTaskTable sTask[] = {
  */
 int task_serial_input(void)
 {
-    int aRet;
+    int aRet = 0;
+    unsigned char aRx;
+
+    /* シリアル入力状態を確認 */
+    if (EUSART_IsRxReady())
+    {
+        /* 1文字蓄積 */
+        sInputSerialData[sInputSerialOffsetIn] = EUSART_Read();
+
+        /* コールバックタスクをリクエスト */
+        TASK_REGISTER(TASK_SERIAL_CALLBACK);
+
+        /* 改行コードなら構文解析タスクをリクエスト */
+        if (sInputSerialData[sInputSerialOffsetIn] == '\r')
+        {
+            TASK_REGISTER(TASK_COMMAND_PARSE);
+        }
+
+        sInputSerialOffsetIn++;
+    }
+    else
+    {
+        /* タスクのリクエストはあるのに入力データがない */
+        aRet = -1;
+    }
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_SERIAL_INPUT);
+
     return aRet;
 }
 
@@ -49,7 +81,15 @@ int task_serial_input(void)
  */
 int task_serial_callback(void)
 {
-    int aRet;
+    int aRet = 0;
+
+    /* 1文字出力 */
+    EUSART_Write(sInputSerialData[sInputSerialOffsetOut]);
+    sInputSerialOffsetOut++;
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_SERIAL_CALLBACK);
+
     return aRet;
 }
 
@@ -62,7 +102,25 @@ int task_serial_callback(void)
  */
 int task_serial_std_output(void)
 {
-    int aRet;
+    int aRet = 0;
+
+    /* テスト ----> */
+    unsigned char aTestStr[] = "std task is running!\r\n";
+    int i;
+
+    while (aTestStr[i] != '\0')
+    {
+        com_putchar(aTestStr[i]);
+        i++;
+    }
+
+    sInputSerialOffsetIn = 0;
+    sInputSerialOffsetOut = 0;
+    /* <---- テスト */
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_SERIAL_STD_OUTPUT);
+
     return aRet;
 }
 
@@ -89,7 +147,15 @@ int task_serial_err_output(void)
  */
 int task_command_parse(void)
 {
-    int aRet;
+    int aRet = 0;
+
+    /* テスト ----> */
+    TASK_REGISTER(TASK_COMMAND_EXCUTE);
+    /* <---- テスト */
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_COMMAND_PARSE);
+
     return aRet;
 }
 
@@ -103,7 +169,15 @@ int task_command_parse(void)
  */
 int task_command_excute(void)
 {
-    int aRet;
+    int aRet = 0;
+
+    /* テスト ----> */
+    TASK_REGISTER(TASK_SERIAL_STD_OUTPUT);
+    /* <---- テスト */
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_COMMAND_EXCUTE);
+
     return aRet;
 }
 
@@ -246,6 +320,23 @@ void TASK_COMPLETE(int inID)
     return;
 }
 
+/* タスク関連初期化処理
+ * in:  (なし)
+ * out: (なし)
+ */
+void task_init(void)
+{
+    int i;
+
+    /* シリアルデータ入力バッファ初期化 */
+    for (i = 0; i < INPUT_SERIAL_LEN; i++)
+    {
+        sInputSerialData[i] = '\0';
+    }
+    sInputSerialOffsetIn = 0;
+    sInputSerialOffsetOut = 0;
+}
+
 /* タスクスケジューラ
  * タスク優先度の高いタスクから実行する
  * 決してreturnせず、無限ループする
@@ -256,21 +347,24 @@ void TASK_Scheduler(void)
     unsigned char i;
     int aTaskRet;
 
-    /* リクエストのあるタスクを検索する */
-    /* 優先度の高い順に並んでいるので、発見し次第抜ける */
-    for (i = 0; i < TASK_NUM; i++)
+    while (1)
     {
-        if (sTask[i].mReqCnt != 0)
+        /* リクエストのあるタスクを検索する */
+        /* 優先度の高い順に並んでいるので、発見し次第抜ける */
+        for (i = 0; i < TASK_NUM; i++)
         {
-            break;
+            if (sTask[i].mReqCnt != 0)
+            {
+                break;
+            }
         }
-    }
 
-    aTaskRet = sTask[i].mpFunc();
-    TASK_COMPLETE(i);
-    if (aTaskRet != 0)
-    {
-        /* タスクが正常に完了しなかった場合エラー出力 */
-        com_puterr(aTaskRet);
+        aTaskRet = sTask[i].mpFunc();
+        TASK_COMPLETE(i);
+        if (aTaskRet != 0)
+        {
+            /* タスクが正常に完了しなかった場合エラー出力 */
+            com_puterr(aTaskRet);
+        }
     }
 }

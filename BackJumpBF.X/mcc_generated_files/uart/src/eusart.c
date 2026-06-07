@@ -35,6 +35,7 @@
   Section: Included Files
 */
 #include "../eusart.h"
+#include "../../../task.h"
 
 /**
   Section: Macro Declarations
@@ -92,9 +93,6 @@ static volatile eusart_status_t eusartRxStatusBuffer[EUSART_RX_BUFFER_SIZE];
 static volatile uint8_t eusartRxCount;
 
 static volatile eusart_status_t eusartRxLastError;
-
-/* 改行コード確認フラグ */
-// unsigned char gEnterFlag;
 
 /**
   Section: EUSART APIs
@@ -322,17 +320,6 @@ void EUSART_ReceiveISR(void)
 
     regValue = RC1REG;
 
-    /* エンターキーならフラグを立てる ---->
-    if (regValue == '\r')
-    {
-        gEnterFlag = 1;
-    }
-    */
-
-    /* コールバックする ---->
-    EUSART_Write(regValue);
-    */
-
     tempRxHead = (eusartRxHead + 1U) & EUSART_RX_BUFFER_MASK; // Buffer size of RX should be in the 2^n
     if (tempRxHead == eusartRxTail)
     {
@@ -348,6 +335,8 @@ void EUSART_ReceiveISR(void)
     if (NULL != EUSART_RxCompleteInterruptHandler)
     {
         (*EUSART_RxCompleteInterruptHandler)();
+        /* タスクリクエスト */
+        TASK_REGISTER(TASK_SERIAL_INPUT);
     }
 }
 

@@ -38,9 +38,6 @@
 #include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
 #include "task.h"     /* タスクスケジューラ */
 
-/* 改行コード確認フラグ */
-// extern unsigned char gEnterFlag;
-
 /*
     Main application
 */
@@ -75,27 +72,17 @@ int main(void)
 
     com_init();
     init_7seg();
+    task_init();
 
     i = 0;
     _ = 0;
 
     // EEPROM_Write(0x10, 65);
-    unsigned char eetest = EEPROM_Read(0x10);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
-    EUSART_Write(eetest);
+    // unsigned char eetest = EEPROM_Read(0x10);
+    // EUSART_Write(eetest);
 
-    while (1)
-    {
-        TASK_Scheduler();
-        /* タスクスケジューラはreturnしない */
-    }
+    TASK_Scheduler();
+    /* タスクスケジューラはreturnしない */
 
     /* 無限ループ タスク優先度が大きいほうが採用される */
     // while (1)
@@ -113,7 +100,7 @@ int main(void)
 
         EUSART_Write(rx);
     } */
-    // printf("%lu ", _);
+    // printf("%lu ", _);/
     //(void)I2C_setValue(0x07, 0x13, 0x40);
     //__delay_ms(50);
     //(void)I2C_setValue(0x07, 0x13, 0x00);

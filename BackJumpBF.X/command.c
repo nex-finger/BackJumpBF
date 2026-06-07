@@ -4,8 +4,6 @@
 #include "mcc_generated_files/system/system.h"
 #include "command.h"
 
-// extern unsigned char gEnterFlag;
-
 /* 1文字出力
  * バッファが溢れないように1ミリ秒待機する */
 void com_putchar(char in)
