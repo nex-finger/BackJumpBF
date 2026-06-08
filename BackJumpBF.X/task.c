@@ -253,7 +253,11 @@ int task_10ms(void)
  */
 int task_idle(void)
 {
-    int aRet;
+    int aRet = 0;
+
+    /* 1msなにもしない、タスクは完了させない */
+    __delay_ms(1);
+
     return aRet;
 }
 
@@ -335,6 +339,9 @@ void task_init(void)
     }
     sInputSerialOffsetIn = 0;
     sInputSerialOffsetOut = 0;
+
+    /* イベントタスクをリクエスト */
+    TASK_REGISTER(TASK_IDLE);
 }
 
 /* タスクスケジューラ
