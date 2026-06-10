@@ -320,6 +320,9 @@ void EUSART_ReceiveISR(void)
 
     regValue = RC1REG;
 
+    /* タスクリクエスト */
+    TASK_REGISTER(TASK_SERIAL_INPUT);
+
     tempRxHead = (eusartRxHead + 1U) & EUSART_RX_BUFFER_MASK; // Buffer size of RX should be in the 2^n
     if (tempRxHead == eusartRxTail)
     {
@@ -335,8 +338,6 @@ void EUSART_ReceiveISR(void)
     if (NULL != EUSART_RxCompleteInterruptHandler)
     {
         (*EUSART_RxCompleteInterruptHandler)();
-        /* タスクリクエスト */
-        TASK_REGISTER(TASK_SERIAL_INPUT);
     }
 }
 

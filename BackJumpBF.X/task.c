@@ -106,7 +106,7 @@ int task_serial_std_output(void)
 
     /* テスト ----> */
     unsigned char aTestStr[] = "std task is running!\r\n";
-    int i;
+    int i = 0;
 
     while (aTestStr[i] != '\0')
     {
@@ -319,7 +319,7 @@ void TASK_COMPLETE(int inID)
     }
 
     /* 多重割り込み許可 */
-    INTCONbits.GIE = 1;
+    INTCONbits.GIE = aFlag;
 
     return;
 }
@@ -339,9 +339,6 @@ void task_init(void)
     }
     sInputSerialOffsetIn = 0;
     sInputSerialOffsetOut = 0;
-
-    /* イベントタスクをリクエスト */
-    TASK_REGISTER(TASK_IDLE);
 }
 
 /* タスクスケジューラ
@@ -352,22 +349,38 @@ void task_init(void)
 void TASK_Scheduler(void)
 {
     unsigned char i;
+    int aTaskReservationFlg;
     int aTaskRet;
 
     while (1)
     {
+        aTaskRet = 0;
+        aTaskReservationFlg = 0;
+
         /* リクエストのあるタスクを検索する */
         /* 優先度の高い順に並んでいるので、発見し次第抜ける */
         for (i = 0; i < TASK_NUM; i++)
         {
             if (sTask[i].mReqCnt != 0)
             {
+                aTaskReservationFlg = 1;
                 break;
             }
         }
 
-        aTaskRet = sTask[i].mpFunc();
-        TASK_COMPLETE(i);
+        /* もし行うタスクがなければアイドルタスクを実行 */
+        if (aTaskReservationFlg == 0)
+        {
+            /* タスクがない */
+            task_idle();
+        }
+        else
+        {
+            /* タスクがある */
+            aTaskRet = sTask[i].mpFunc();
+            TASK_COMPLETE(sTask[i].mId);
+        }
+
         if (aTaskRet != 0)
         {
             /* タスクが正常に完了しなかった場合エラー出力 */
