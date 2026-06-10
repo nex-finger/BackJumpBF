@@ -33,6 +33,7 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
+#include "mcc_generated_files/eeprom-lib/eeprom.h"
 #include "command.h"  /* コマンド関連 */
 #include "i2c.h"      /* i2c通信関連 */
 #include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
@@ -77,9 +78,16 @@ int main(void)
     i = 0;
     _ = 0;
 
+    unsigned char __1 = 0x56;
+    unsigned char __2 = 0x00;
+    EEPROM_ByteWrite(0x12, &__1);
+    __delay_ms(50);
+
+    EEPROM_ByteRead(0x12, &__2);
+    com_putchar(__2);
     // EEPROM_Write(0x10, 65);
-    // unsigned char eetest = EEPROM_Read(0x10);
-    // EUSART_Write(eetest);
+    //  unsigned char eetest = EEPROM_Read(0x10);
+    //  EUSART_Write(eetest);
 
     TASK_Scheduler();
     /* タスクスケジューラはreturnしない */
