@@ -1,2 +1,1 @@
-/* @file task.c
- * タスク関連 */
+/* @file task.c */
