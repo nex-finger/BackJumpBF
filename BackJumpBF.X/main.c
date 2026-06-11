@@ -38,6 +38,7 @@
 #include "i2c.h"      /* i2c通信関連 */
 #include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
 #include "task.h"     /* タスクスケジューラ */
+#include "convert.h"  /* 入出力変換 */
 
 /*
     Main application

@@ -22,8 +22,8 @@ static struct stTaskTable sTask[] = {
     {TASK_SERIAL_INPUT, task_serial_input, 0},
     {TASK_LED_UPDATE, task_LED_update, 0},
     {TASK_10MS, task_10ms, 0},
-    {TASK_SERIAL_STD_OUTPUT, task_serial_std_output, 0},
     {TASK_SERIAL_ERR_OUTPUT, task_serial_err_output, 0},
+    {TASK_SERIAL_STD_OUTPUT, task_serial_std_output, 0},
     {TASK_COMMAND_PARSE, task_command_parse, 0},
     {TASK_COMMAND_EXCUTE, task_command_excute, 0},
     {TASK_IDLE, task_idle, 0}
