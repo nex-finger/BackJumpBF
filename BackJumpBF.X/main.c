@@ -34,11 +34,11 @@
 */
 #include "mcc_generated_files/system/system.h"
 #include "mcc_generated_files/eeprom-lib/eeprom.h"
-#include "command.h"  /* コマンド関連 */
-#include "i2c.h"      /* i2c通信関連 */
-#include "mcp23017.h" /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
-#include "task.h"     /* タスクスケジューラ */
-#include "convert.h"  /* 入出力変換 */
+#include "command.h"            /* コマンド関連 */
+#include "i2c.h"                /* i2c通信関連 */
+#include "mcp23017.h"           /* mcp23017と通信するためにi2cを組み合わせたパッケージ */
+#include "task.h"               /* タスクスケジューラ */
+#include "my_library/convert.h" /* 入出力変換 */
 
 /*
     Main application
