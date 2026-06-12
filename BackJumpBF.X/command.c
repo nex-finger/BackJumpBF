@@ -59,6 +59,7 @@ void com_init(void)
     while (cStr[i] != '\0')
     {
         EUSART_Write(cStr[i]);
+        __delay_ms(2);
         i++;
     }
 }

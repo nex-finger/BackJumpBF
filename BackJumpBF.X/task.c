@@ -90,6 +90,8 @@ int task_serial_callback(void)
     EUSART_Write(sInputSerialData[sInputSerialOffsetOut]);
     sInputSerialOffsetOut++;
 
+    __delay_ms(1);
+
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_SERIAL_CALLBACK);
 
@@ -110,6 +112,8 @@ int task_serial_std_output(void)
     /* 1文字出力 */
     EUSART_Write(sOutputSerialRingBuff[sOutputSerialOffsetPut]);
     output_offset_put_inc();
+
+    __delay_ms(2);
 
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_SERIAL_STD_OUTPUT);
@@ -384,7 +388,7 @@ void TASK_Scheduler(void)
         {
             /* タスクがある */
             aTaskRet = sTask[i].mpFunc();
-            TASK_COMPLETE(sTask[i].mId);
+            // TASK_COMPLETE(sTask[i].mId);
         }
 
         if (aTaskRet != 0)

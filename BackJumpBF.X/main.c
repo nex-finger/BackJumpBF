@@ -72,8 +72,10 @@ int main(void)
 
     I2C_Init();
 
-    com_init();
     init_7seg();
+
+    com_init();
+
     task_init();
 
     i = 0;
