@@ -21,13 +21,14 @@
 #define TASK_NUM 12
 
 /* シリアルデータ入力バッファ */
-#define INPUT_SERIAL_LEN 300
+#define INPUT_SERIAL_LEN 512
+#define OUTPUT_SERIAL_LEN 512
 
 struct stTaskTable
 {
-    int mId;               /* タスクID */
-    int (*mpFunc)(void);   /* タスク関数 */
-    unsigned char mReqCnt; /* リクエスト数 */
+    int mId;             /* タスクID */
+    int (*mpFunc)(void); /* タスク関数 */
+    int mReqCnt;         /* リクエスト数 */
 };
 
 /* 各タスク処理 */
@@ -53,5 +54,11 @@ void task_init(void);
 
 /* タスクスケジューラ */
 void TASK_Scheduler(void);
+
+/* オフセット更新 */
+void output_offset_set_inc(void);
+void output_offset_put_inc(void);
+
+void output_register(unsigned char in);
 
 #endif /* TASK_H */

@@ -7,9 +7,12 @@
 
 #define null 0
 
-static unsigned char sInputSerialData[INPUT_SERIAL_LEN];
-static int sInputSerialOffsetIn;
-static int sInputSerialOffsetOut;
+static unsigned char sInputSerialData[INPUT_SERIAL_LEN];       /* 入力バッファ */
+static unsigned char sOutputSerialRingBuff[OUTPUT_SERIAL_LEN]; /* 出力リングバッファ */
+static int sInputSerialOffsetIn;                               /* 入力データ格納オフセット */
+static int sInputSerialOffsetOut;                              /* 入力データ送信オフセット */
+static int sOutputSerialOffsetSet;                             /* 出力データ格納オフセット */
+static int sOutputSerialOffsetPut;                             /* 出力データ送信オフセット */
 
 /* タスクテーブル
  * ID, 関数ポインタ, リクエスト状況, 優先度 */
@@ -104,19 +107,9 @@ int task_serial_std_output(void)
 {
     int aRet = 0;
 
-    /* テスト ----> */
-    unsigned char aTestStr[] = "std task is running!\r\n";
-    int i = 0;
-
-    while (aTestStr[i] != '\0')
-    {
-        com_putchar(aTestStr[i]);
-        i++;
-    }
-
-    sInputSerialOffsetIn = 0;
-    sInputSerialOffsetOut = 0;
-    /* <---- テスト */
+    /* 1文字出力 */
+    EUSART_Write(sOutputSerialRingBuff[sOutputSerialOffsetPut]);
+    output_offset_put_inc();
 
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_SERIAL_STD_OUTPUT);
@@ -172,8 +165,13 @@ int task_command_excute(void)
     int aRet = 0;
 
     /* テスト ----> */
-    TASK_REGISTER(TASK_SERIAL_STD_OUTPUT);
+    unsigned char aTestStr[] = "std task is running!\r\n";
+    com_puts(aTestStr);
     /* <---- テスト */
+
+    /* 入力バッファの内容を初期化 */
+    sInputSerialOffsetIn = 0;
+    sInputSerialOffsetOut = 0;
 
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_COMMAND_EXCUTE);
@@ -339,6 +337,14 @@ void task_init(void)
     }
     sInputSerialOffsetIn = 0;
     sInputSerialOffsetOut = 0;
+
+    /* シリアルデータ出力リングバッファ初期化 */
+    for (i = 0; i < OUTPUT_SERIAL_LEN; i++)
+    {
+        sOutputSerialRingBuff[i] = '\0';
+    }
+    sOutputSerialOffsetPut = 0;
+    sOutputSerialOffsetSet = 0;
 }
 
 /* タスクスケジューラ
@@ -387,4 +393,28 @@ void TASK_Scheduler(void)
             com_puterr(aTaskRet);
         }
     }
+}
+
+void output_offset_set_inc(void)
+{
+    sOutputSerialOffsetSet++;
+    if (sOutputSerialOffsetSet >= OUTPUT_SERIAL_LEN)
+    {
+        sOutputSerialOffsetSet = 0;
+    }
+}
+
+void output_offset_put_inc(void)
+{
+    sOutputSerialOffsetPut++;
+    if (sOutputSerialOffsetPut >= OUTPUT_SERIAL_LEN)
+    {
+        sOutputSerialOffsetPut = 0;
+    }
+}
+
+void output_register(unsigned char in)
+{
+    sOutputSerialRingBuff[sOutputSerialOffsetSet] = in;
+    output_offset_set_inc();
 }

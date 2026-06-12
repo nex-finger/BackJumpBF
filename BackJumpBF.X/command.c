@@ -3,13 +3,25 @@
 
 #include "mcc_generated_files/system/system.h"
 #include "command.h"
+#include "task.h"
 
 /* 1文字出力
  * バッファが溢れないように1ミリ秒待機する */
-void com_putchar(char in)
+void com_putchar(unsigned char in)
 {
-    EUSART_Write(in);
-    __delay_ms(1);
+    output_register(in);
+    TASK_REGISTER(TASK_SERIAL_STD_OUTPUT);
+}
+
+/* 文字列出力 */
+void com_puts(unsigned char *in)
+{
+    int i = 0;
+    while (in[i] != '\0')
+    {
+        com_putchar(in[i]);
+        i++;
+    }
 }
 
 /* 1行入力 */
@@ -46,7 +58,7 @@ void com_init(void)
 
     while (cStr[i] != '\0')
     {
-        com_putchar(cStr[i]);
+        EUSART_Write(cStr[i]);
         i++;
     }
 }
