@@ -14,5 +14,6 @@ int strparse(unsigned char *inS, int *outOffset);
 
 /* 文字列基本ライブラリ */
 void strcpy(unsigned char *inS, unsigned char *outS);
+int isprint(unsigned char in);
 
 #endif /* CONVERT_H */
