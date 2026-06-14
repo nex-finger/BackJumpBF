@@ -20,9 +20,10 @@
 
 #define TASK_NUM 12
 
-/* シリアルデータ入力バッファ */
+/* シリアルバッファ */
 #define INPUT_SERIAL_LEN 512
 #define OUTPUT_SERIAL_LEN 512
+#define ERROR_SERIAL_LEN 256
 
 struct stTaskTable
 {

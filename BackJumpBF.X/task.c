@@ -4,11 +4,13 @@
 #include "mcc_generated_files/system/system.h"
 #include "task.h"
 #include "command.h"
+#include "my_library/convert.h"
 
 #define null 0
 
 static unsigned char sInputSerialData[INPUT_SERIAL_LEN];       /* 入力バッファ */
 static unsigned char sOutputSerialRingBuff[OUTPUT_SERIAL_LEN]; /* 出力リングバッファ */
+static unsigned char sErrorSerialData[ERROR_SERIAL_LEN];       /* エラー出力バッファ */
 static int sInputSerialOffsetIn;                               /* 入力データ格納オフセット */
 static int sInputSerialOffsetOut;                              /* 入力データ送信オフセット */
 static int sOutputSerialOffsetSet;                             /* 出力データ格納オフセット */
@@ -69,6 +71,13 @@ int task_serial_input(void)
         aRet = -1;
     }
 
+    /* バッファがあふれる場合、エラーを通知しバッファをクリアする */
+    if (sInputSerialOffsetIn >= INPUT_SERIAL_LEN)
+    {
+        strcpy("Input buff has overflowed.\r\nThe operation will be ignored.\r\n", sErrorSerialData);
+        TASK_REGISTER(TASK_SERIAL_ERR_OUTPUT);
+    }
+
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_SERIAL_INPUT);
 
@@ -90,7 +99,7 @@ int task_serial_callback(void)
     EUSART_Write(sInputSerialData[sInputSerialOffsetOut]);
     sInputSerialOffsetOut++;
 
-    __delay_ms(1);
+    __delay_ms(2);
 
     /* タスク完了を通知 */
     TASK_COMPLETE(TASK_SERIAL_CALLBACK);
@@ -130,7 +139,46 @@ int task_serial_std_output(void)
  */
 int task_serial_err_output(void)
 {
-    int aRet;
+    int aRet = 0;
+    int i;
+
+    const unsigned char cInitialStr[] = "\x1b[31m\r\n";
+    const unsigned char cFinalStr[] = "\x1b[0m";
+
+    /* 文字を赤色に変える */
+    i = 0;
+    while (cInitialStr[i] != '\0')
+    {
+        EUSART_Write(cInitialStr[i]);
+        __delay_ms(2);
+        i++;
+    }
+
+    /* エラーメッセージを出力 */
+    i = 0;
+    while (sErrorSerialData[i] != '\0')
+    {
+        EUSART_Write(sErrorSerialData[i]);
+        __delay_ms(2);
+        i++;
+    }
+
+    /* 文字をデフォルトに戻す */
+    i = 0;
+    while (cFinalStr[i] != '\0')
+    {
+        EUSART_Write(cFinalStr[i]);
+        __delay_ms(2);
+        i++;
+    }
+
+    /* エラーのためバッファを初期化 */
+    sInputSerialOffsetIn = 0;
+    sInputSerialOffsetOut = 0;
+
+    /* タスク完了を通知 */
+    TASK_COMPLETE(TASK_SERIAL_ERR_OUTPUT);
+
     return aRet;
 }
 
